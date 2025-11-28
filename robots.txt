@@ -1,0 +1,8 @@
+# robots.txt for Zain Ventures India - Bus Hire Rourkela
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://www.zainventures.in/sitemap.xml
