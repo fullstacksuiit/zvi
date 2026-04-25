@@ -1,11 +1,17 @@
 // Zain Ventures India — interactions
 
 (function () {
-  // Nav scroll state
+  // Nav scroll state + scroll progress
   const nav = document.getElementById("nav");
+  const progress = document.getElementById("scrollProgress");
   const onScroll = () => {
-    if (!nav) return;
-    nav.classList.toggle("is-scrolled", window.scrollY > 24);
+    const y = window.scrollY;
+    if (nav) nav.classList.toggle("is-scrolled", y > 24);
+    if (progress) {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (y / max) * 100 : 0;
+      progress.style.setProperty("--p", pct + "%");
+    }
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
