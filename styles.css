@@ -16,14 +16,14 @@
   --line-dark-strong: rgba(255, 255, 255, 0.16);
   --gold: #d4a44a;
   --gold-bright: #ecc06d;
-  --gold-deep: #a8792d;
+  --gold-deep: #8b6422;
   --gold-glow: rgba(212, 164, 74, 0.18);
   --text: #15171c;
-  --text-soft: rgba(21, 23, 28, 0.62);
-  --text-mute: rgba(21, 23, 28, 0.42);
+  --text-soft: rgba(21, 23, 28, 0.7);
+  --text-mute: rgba(21, 23, 28, 0.6);
   --text-on-ink: rgba(250, 250, 247, 0.92);
-  --text-on-ink-soft: rgba(250, 250, 247, 0.62);
-  --text-on-ink-mute: rgba(250, 250, 247, 0.38);
+  --text-on-ink-soft: rgba(250, 250, 247, 0.78);
+  --text-on-ink-mute: rgba(250, 250, 247, 0.7);
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Segoe UI", system-ui, sans-serif;
@@ -922,7 +922,7 @@ section {
   width: 22px;
   height: 22px;
 }
-.feature h4 {
+.feature h3 {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -1011,7 +1011,7 @@ section {
   width: 28px;
   height: 28px;
 }
-.fleet-card h4 {
+.fleet-card h3 {
   font-size: 22px;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -1212,7 +1212,7 @@ section {
   transform: translateY(-3px);
   background: var(--ink);
 }
-.occasion:hover h4 {
+.occasion:hover h3 {
   color: var(--paper);
 }
 .occasion:hover p {
@@ -1235,7 +1235,7 @@ section {
   font-size: 18px;
   transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
 }
-.occasion h4 {
+.occasion h3 {
   font-size: 16px;
   font-weight: 600;
   color: var(--ink);
