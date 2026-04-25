@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-  <!-- Homepage - Bus Hire in Rourkela -->
   <url>
     <loc>https://www.zainventures.in/</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.zainventures.in/logo.png</image:loc>
+      <image:title>Zain Ventures India - Bus Hire Rourkela</image:title>
+      <image:caption>Bus booking and rental service in Rourkela, Odisha</image:caption>
+    </image:image>
   </url>
 
-  <!-- Services Section -->
   <url>
     <loc>https://www.zainventures.in/#services</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Fleet Section -->
   <url>
     <loc>https://www.zainventures.in/#fleet</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- About Section -->
   <url>
-    <loc>https://www.zainventures.in/#about</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://www.zainventures.in/#routes</loc>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Contact Section -->
   <url>
     <loc>https://www.zainventures.in/#contact</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
