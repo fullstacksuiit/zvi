@@ -1,20 +1,58 @@
 // Zain Ventures India — interactions
 
 (function () {
-  // Nav scroll state + scroll progress
   const nav = document.getElementById("nav");
   const progress = document.getElementById("scrollProgress");
-  const onScroll = () => {
+  const orbs = Array.from(document.querySelectorAll(".hero .orb"));
+
+  // Cache layout-dependent values; recompute only on resize
+  let scrollMax = 0;
+  const recomputeMax = () => {
+    scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+  };
+  recomputeMax();
+  window.addEventListener("resize", recomputeMax, { passive: true });
+  // After fonts/images load, layout shifts — recompute then too
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(recomputeMax);
+  }
+  window.addEventListener("load", recomputeMax);
+
+  // Single rAF-batched scroll handler for nav state, parallax, progress
+  let scrollTicking = false;
+  let lastScrolledClass = false;
+  const onScrollFrame = () => {
     const y = window.scrollY;
-    if (nav) nav.classList.toggle("is-scrolled", y > 24);
+
+    // Nav state — only toggle class when crossing threshold
+    const shouldScrolled = y > 24;
+    if (shouldScrolled !== lastScrolledClass && nav) {
+      nav.classList.toggle("is-scrolled", shouldScrolled);
+      lastScrolledClass = shouldScrolled;
+    }
+
+    // Scroll progress
     if (progress) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = max > 0 ? (y / max) * 100 : 0;
+      const pct = scrollMax > 0 ? (y / scrollMax) * 100 : 0;
       progress.style.setProperty("--p", pct + "%");
     }
+
+    // Hero parallax — skip when hero is off-screen
+    if (orbs.length && y < window.innerHeight * 1.2) {
+      for (let i = 0; i < orbs.length; i++) {
+        orbs[i].style.transform = `translate3d(0, ${y * (i + 1) * 0.06}px, 0)`;
+      }
+    }
+
+    scrollTicking = false;
+  };
+  const onScroll = () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(onScrollFrame);
   };
   window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  onScrollFrame();
 
   // Mobile menu
   const navToggle = document.getElementById("navToggle");
@@ -57,21 +95,7 @@
   );
   document.querySelectorAll("[data-reveal]").forEach((el) => reveal.observe(el));
 
-  // Hero parallax orbs
-  const orbs = document.querySelectorAll(".hero .orb");
-  if (orbs.length) {
-    const onParallax = () => {
-      const y = window.scrollY;
-      orbs.forEach((orb, i) => {
-        const speed = (i + 1) * 0.06;
-        orb.style.transform = `translate3d(0, ${y * speed}px, 0)`;
-      });
-    };
-    window.addEventListener("scroll", onParallax, { passive: true });
-  }
-
   // Animated counters
-  const counters = document.querySelectorAll("[data-count]");
   const counterIO = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
@@ -96,21 +120,33 @@
     },
     { threshold: 0.4 }
   );
-  counters.forEach((el) => counterIO.observe(el));
+  document.querySelectorAll("[data-count]").forEach((el) => counterIO.observe(el));
 
-  // Cursor glow on dark fleet cards
+  // Cursor glow on dark fleet cards (rAF-throttled per-card)
   document.querySelectorAll(".fleet-card").forEach((card) => {
-    card.addEventListener("pointermove", (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty(
-        "--mx",
-        ((e.clientX - r.left) / r.width) * 100 + "%"
-      );
-      card.style.setProperty(
-        "--my",
-        ((e.clientY - r.top) / r.height) * 100 + "%"
-      );
-    });
+    let pending = false;
+    let lastEvent = null;
+    card.addEventListener(
+      "pointermove",
+      (e) => {
+        lastEvent = e;
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(() => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty(
+            "--mx",
+            ((lastEvent.clientX - r.left) / r.width) * 100 + "%"
+          );
+          card.style.setProperty(
+            "--my",
+            ((lastEvent.clientY - r.top) / r.height) * 100 + "%"
+          );
+          pending = false;
+        });
+      },
+      { passive: true }
+    );
   });
 
   // Footer year

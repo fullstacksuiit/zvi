@@ -22,8 +22,12 @@
     <meta name="theme-color" content="#050507" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <link rel="icon" type="image/png" href="logo.png" />
-    <link rel="apple-touch-icon" href="logo.png" />
+    <link rel="icon" type="image/png" href="logo-96.png" />
+    <link rel="apple-touch-icon" href="logo-96.png" />
+
+    <!-- Preload critical above-the-fold assets -->
+    <link rel="preload" as="image" href="logo-96.png" fetchpriority="high" />
+    <link rel="preload" as="style" href="styles.css" />
 
     <!-- Enhanced SEO Meta Tags -->
     <meta
@@ -236,13 +240,26 @@
       }
     </script>
 
-    <!-- Fonts -->
+    <!-- Fonts — async, non-render-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+      />
+    </noscript>
 
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -263,7 +280,14 @@
     <header class="nav" id="nav">
       <div class="nav-inner">
         <a href="#home" class="nav-brand">
-          <img src="logo.png" alt="Zain Ventures India" />
+          <img
+            src="logo-96.png"
+            alt="Zain Ventures India"
+            width="28"
+            height="28"
+            decoding="async"
+            fetchpriority="high"
+          />
           <span>Zain Ventures</span>
         </a>
         <nav class="nav-links">
@@ -708,7 +732,7 @@
               <span>AC · Sleeper · Semi-sleeper</span>
             </div>
           </a>
-          <a href="#contact" class="route-card is-wide" data-reveal data-delay="2">
+          <a href="#contact" class="route-card" data-reveal data-delay="2">
             <span class="route-from">Rourkela →</span>
             <span class="route-to">Bhubaneswar <span class="arrow">→</span></span>
             <p>Corporate travel, medical visits, and family trips to the state capital.</p>
@@ -717,7 +741,7 @@
               <span>7–8 hrs</span>
             </div>
           </a>
-          <a href="#contact" class="route-card is-wide" data-reveal data-delay="3">
+          <a href="#contact" class="route-card" data-reveal data-delay="3">
             <span class="route-from">Rourkela →</span>
             <span class="route-to">Kolkata <span class="arrow">→</span></span>
             <p>Sleeper and semi-sleeper coaches for groups, shopping trips, and events.</p>
