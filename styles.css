@@ -1854,4 +1854,242 @@ section {
     opacity: 1;
     transform: none;
   }
+  .bus-fallback {
+    transform: none !important;
+  }
+  .bus-callout {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =================================================================
+   BUS SHOWCASE — scroll-pinned, Apple-style
+   ================================================================= */
+.bus-showcase {
+  position: relative;
+  height: 420vh;
+  background: var(--ink);
+  color: var(--text-on-ink);
+  overflow: clip;
+}
+.bus-showcase-track {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+.bus-showcase-pin {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.bus-showcase-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 60%,
+      rgba(212, 164, 74, 0.18),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 50% 100%,
+      rgba(212, 164, 74, 0.08),
+      transparent 70%
+    );
+  pointer-events: none;
+}
+
+.bus-showcase-head {
+  position: absolute;
+  top: clamp(64px, 10vh, 120px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 3;
+  width: min(880px, 92vw);
+}
+.bus-showcase-title {
+  font-size: clamp(36px, 5.4vw, 72px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-top: 12px;
+  color: var(--paper);
+}
+
+/* Stage that holds the bus image / canvas */
+.bus-stage {
+  position: relative;
+  width: min(1100px, 88vw);
+  height: min(620px, 56vh);
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  perspective: 1400px;
+}
+.bus-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.bus-stage.is-canvas .bus-canvas {
+  display: block;
+}
+.bus-stage.is-canvas .bus-fallback {
+  display: none;
+}
+.bus-fallback {
+  position: relative;
+  max-width: 60%;
+  max-height: 80%;
+  width: auto;
+  height: auto;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 80px rgba(212, 164, 74, 0.25));
+  transform-origin: center center;
+  will-change: transform;
+  transition: filter 0.6s var(--ease);
+}
+
+/* Callouts */
+.bus-callouts {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.bus-callout {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px 14px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-pill);
+  color: var(--paper);
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  max-width: 280px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+.bus-callout.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.bus-callout-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  box-shadow: 0 0 16px var(--gold);
+  flex-shrink: 0;
+}
+.bus-callout strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+.bus-callout small {
+  display: block;
+  font-size: 12px;
+  color: var(--text-on-ink-soft);
+  margin-top: 2px;
+}
+
+.bus-callout:nth-child(1) {
+  top: 18%;
+  left: 4%;
+}
+.bus-callout:nth-child(2) {
+  top: 24%;
+  right: 4%;
+}
+.bus-callout:nth-child(3) {
+  bottom: 22%;
+  left: 4%;
+}
+.bus-callout:nth-child(4) {
+  bottom: 18%;
+  right: 4%;
+}
+
+/* Progress indicator at the bottom */
+.bus-progress {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(280px, 50vw);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  z-index: 3;
+}
+.bus-progress-bar {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+  box-shadow: 0 0 8px rgba(212, 164, 74, 0.6);
+  transition: width 0.1s linear;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bus-showcase {
+    height: 360vh;
+  }
+  .bus-showcase-head {
+    top: clamp(48px, 8vh, 80px);
+  }
+  .bus-stage {
+    width: 92vw;
+    height: 48vh;
+  }
+  .bus-fallback {
+    max-width: 80%;
+  }
+  .bus-callout {
+    padding: 10px 14px 10px 12px;
+    max-width: 200px;
+  }
+  .bus-callout strong {
+    font-size: 12px;
+  }
+  .bus-callout small {
+    font-size: 10px;
+  }
+  .bus-callout:nth-child(1) {
+    top: 14%;
+    left: 3%;
+  }
+  .bus-callout:nth-child(2) {
+    top: 18%;
+    right: 3%;
+  }
+  .bus-callout:nth-child(3) {
+    bottom: 28%;
+    left: 3%;
+  }
+  .bus-callout:nth-child(4) {
+    bottom: 22%;
+    right: 3%;
+  }
 }

@@ -425,6 +425,73 @@
       </div>
     </section>
 
+    <!-- Bus Showcase — Apple-style scroll-pinned animation -->
+    <section class="bus-showcase" id="bus-showcase" aria-labelledby="bus-showcase-title">
+      <div class="bus-showcase-track">
+        <div class="bus-showcase-pin">
+          <div class="bus-showcase-bg" aria-hidden="true"></div>
+
+          <header class="bus-showcase-head">
+            <span class="eyebrow on-ink">Our Fleet</span>
+            <h2 id="bus-showcase-title" class="bus-showcase-title">
+              Built for every <span class="serif">journey.</span>
+            </h2>
+          </header>
+
+          <div
+            class="bus-stage"
+            data-bus-stage
+            data-frames="60"
+            data-frame-path="images/bus-frames/bus-{n}.webp"
+          >
+            <canvas class="bus-canvas" aria-hidden="true"></canvas>
+            <img
+              class="bus-fallback"
+              src="logo.png"
+              alt="Zain Ventures India bus"
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="bus-callouts" aria-hidden="true">
+            <div class="bus-callout" data-at="0.18">
+              <span class="bus-callout-dot"></span>
+              <div>
+                <strong>AC climate control</strong>
+                <small>Comfortable in any weather</small>
+              </div>
+            </div>
+            <div class="bus-callout" data-at="0.40">
+              <span class="bus-callout-dot"></span>
+              <div>
+                <strong>GPS-tracked fleet</strong>
+                <small>Live location, always insured</small>
+              </div>
+            </div>
+            <div class="bus-callout" data-at="0.62">
+              <span class="bus-callout-dot"></span>
+              <div>
+                <strong>20 to 50 seater</strong>
+                <small>Every group size, perfectly sized</small>
+              </div>
+            </div>
+            <div class="bus-callout" data-at="0.84">
+              <span class="bus-callout-dot"></span>
+              <div>
+                <strong>Push-back recline</strong>
+                <small>Long journeys, easy comfort</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="bus-progress" aria-hidden="true">
+            <span class="bus-progress-bar"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Services -->
     <section id="services" class="services">
       <div class="section-head" data-reveal>
