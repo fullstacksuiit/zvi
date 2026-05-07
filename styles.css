@@ -326,15 +326,60 @@ h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-tra
   font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
 }
 .mc-tag { color: var(--terracotta); font-weight: 500; }
-.map-canvas { position: relative; aspect-ratio: 460/540; overflow: hidden; }
+.map-canvas { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--paper-2); }
 .route-svg { width: 100%; height: 100%; display: block; }
-.route-path {
-  stroke-dasharray: 800; stroke-dashoffset: 800;
-  animation: drawLine 3.5s 0.8s cubic-bezier(.7,0,.2,1) forwards;
+
+/* Sea + coast */
+.sea  { opacity: 0.85; }
+.coast { stroke-linecap: round; }
+.river { stroke-linejoin: round; }
+
+/* Routes — all faint by default, active one drawn in terracotta */
+.route-line {
+  fill: none;
+  stroke: #14181F;
+  stroke-width: 0.9;
+  stroke-dasharray: 3 4;
+  opacity: 0.22;
+  pointer-events: none;
+  transition: opacity 0.4s, stroke 0.4s, stroke-width 0.4s;
 }
-@keyframes drawLine { to { stroke-dashoffset: 0; } }
-.pin text { paint-order: stroke; stroke: var(--paper-2); stroke-width: 3; }
-.compass { transform-origin: 400px 60px; }
+.route-line.is-active {
+  stroke: var(--terracotta);
+  stroke-width: 2.6;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  opacity: 1;
+  animation: drawRoute 2.6s cubic-bezier(.7,0,.2,1) forwards;
+  filter: drop-shadow(0 1px 0 rgba(217,71,46,0.3));
+}
+@keyframes drawRoute { to { stroke-dashoffset: 0; } }
+
+/* Pins */
+.pin text {
+  paint-order: stroke;
+  stroke: var(--paper-2);
+  stroke-width: 3.5;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--ink);
+  letter-spacing: -0.01em;
+}
+.pin circle { fill: #2c3140; transition: fill 0.4s, r 0.4s; }
+.pin.pin-minor circle { fill: #6e6757; opacity: 0.7; }
+.pin.pin-minor text { font-size: 10px; fill: #6e6757; font-weight: 500; }
+.pin.is-active circle { fill: var(--terracotta) !important; }
+.pin.is-active text { fill: var(--terracotta); }
+.pin.is-active::after { content: ""; }
+.pin.pin-origin circle:nth-child(3) { animation: ringPulse 2.8s ease-out infinite; transform-origin: 285px 374px; }
+@keyframes ringPulse {
+  0%   { r: 14; opacity: 0.5; }
+  100% { r: 28; opacity: 0; }
+}
+
+/* Bus glow */
+.bus-mover { filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4)); }
 .map-stamp {
   position: absolute; right: 14px; bottom: 14px;
   width: clamp(96px, 14vw, 130px); aspect-ratio: 1; opacity: 0;

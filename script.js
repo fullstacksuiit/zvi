@@ -69,6 +69,92 @@
     });
   });
 
+  // ---------- Route switching: bus follows the selected destination ----------
+  // Map a board row's data-dest → SVG path id and human-readable label.
+  const ROUTES = {
+    PURI:        { id: "route-puri",        label: "PUR", km: "500 KM", dur: "9H 30M",  ms: 12000 },
+    BHUBANESWAR: { id: "route-bhubaneswar", label: "BBI", km: "370 KM", dur: "7H 00M",  ms: 10000 },
+    KOLKATA:     { id: "route-kolkata",     label: "CCU", km: "540 KM", dur: "10H 30M", ms: 13000 },
+    RANCHI:      { id: "route-ranchi",      label: "IXR", km: "210 KM", dur: "4H 30M",  ms: 7000  },
+    JAMSHEDPUR:  { id: "route-jamshedpur",  label: "IXW", km: "180 KM", dur: "3H 30M",  ms: 6500  },
+    SAMBALPUR:   { id: "route-sambalpur",   label: "SBP", km: "165 KM", dur: "3H 30M",  ms: 6500  },
+    SIMLIPAL:    { id: "route-simlipal",    label: "SIM", km: "230 KM", dur: "5H 00M",  ms: 7500  },
+    VARANASI:    { id: "route-varanasi",    label: "VNS", km: "880 KM", dur: "16H 00M", ms: 17000 },
+    CUTTACK:     { id: "route-cuttack",     label: "CTC", km: "350 KM", dur: "7H 00M",  ms: 9500  },
+  };
+
+  const mapStateEl = document.getElementById("mapState");
+  const mapDistEl  = document.getElementById("mapDist");
+
+  function setActiveRoute(destKey) {
+    const r = ROUTES[destKey];
+    if (!r) return;
+
+    // Toggle route line classes
+    document.querySelectorAll(".route-line").forEach(el => {
+      el.classList.toggle("is-active", el.getAttribute("data-route") === r.id);
+    });
+    // Force CSS animation restart by toggling
+    const activeEl = document.querySelector(`.route-line[data-route="${r.id}"]`);
+    if (activeEl) {
+      activeEl.classList.remove("is-active");
+      void activeEl.getBoundingClientRect();
+      activeEl.classList.add("is-active");
+    }
+
+    // Toggle pin highlighting
+    document.querySelectorAll(".pin").forEach(p => p.classList.remove("is-active"));
+    const pin = document.getElementById("pin-" + r.id);
+    if (pin) pin.classList.add("is-active");
+
+    // Replace bus-mover wholesale to reliably restart animateMotion
+    const oldBus = document.getElementById("busMover");
+    if (oldBus) {
+      const newBus = oldBus.cloneNode(true);
+      const am = newBus.querySelector("#busMotion");
+      const mp = newBus.querySelector("#busMpath");
+      if (mp) mp.setAttribute("href", "#" + r.id);
+      if (am) am.setAttribute("dur", (r.ms / 1000) + "s");
+      oldBus.replaceWith(newBus);
+    }
+
+    // Update map footer
+    if (mapStateEl) mapStateEl.textContent = "● ROUTE PREVIEW · " + destKey;
+    if (mapDistEl)  mapDistEl.textContent  = `RKL → ${r.label} · ${r.km} · ${r.dur}`;
+
+    // Update pass form's "to" field if present (capitalise nicely)
+    const toInput = document.querySelector('.pass-form input[name="to"]');
+    if (toInput) toInput.value = destKey.charAt(0) + destKey.slice(1).toLowerCase();
+  }
+
+  // Wire each row: click → preview route + scroll to map; hover (desktop) → quick preview
+  function wireRouteRows() {
+    document.querySelectorAll(".row[data-row]").forEach(row => {
+      const dest = row.dataset.dest;
+      if (!ROUTES[dest]) return;
+
+      row.addEventListener("click", (e) => {
+        e.preventDefault();
+        setActiveRoute(dest);
+        const map = document.querySelector(".map-card");
+        if (map) map.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+      // Subtle hover preview on desktop (no scroll)
+      if (matchMedia("(hover: hover)").matches) {
+        let hoverTimer = null;
+        row.addEventListener("mouseenter", () => {
+          hoverTimer = setTimeout(() => setActiveRoute(dest), 250);
+        });
+        row.addEventListener("mouseleave", () => clearTimeout(hoverTimer));
+      }
+    });
+  }
+  wireRouteRows();
+
+  // Set initial active route (Puri)
+  setTimeout(() => setActiveRoute("PURI"), 600);
+
   // ---------- Departures board: split-flap rendering ----------
   // Renders each row's data-* fields as columns of split-flap tiles, animated in stagger.
   const FLAP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 →·-/₹";

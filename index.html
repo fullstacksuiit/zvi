@@ -240,17 +240,17 @@
           <div class="hero-left">
             <div class="eyebrow split">
               <span class="tri-dot" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>नमस्ते · Bus hire across Bhārat</span>
+              <span>नमस्ते · Inter-state bus hire from Rourkela</span>
             </div>
 
             <h1 class="display">
-              <span class="reveal-line"><span class="word">Roads.</span></span>
-              <span class="reveal-line"><span class="word">Routes.</span></span>
-              <span class="reveal-line"><span class="word italic">Rourkela.</span></span>
+              <span class="reveal-line"><span class="word">Across</span></span>
+              <span class="reveal-line"><span class="word">Odisha.</span></span>
+              <span class="reveal-line"><span class="word italic">And beyond.</span></span>
             </h1>
 
             <p class="lede">
-              Bus hire, tempo travellers and chauffeured cars across Odisha — arranged with the calm of a well-stamped passport. <em>One call, on the road.</em>
+              Inter-state coaches, tempo travellers and chauffeured cars from Rourkela — to Jharkhand, Bengal, Uttar Pradesh and every corner of Odisha. <em>One call. State borders, sorted.</em>
             </p>
 
             <div class="hero-cta">
@@ -281,76 +281,141 @@
                 <span class="mc-meta">SHEET 22B / SE INDIA</span>
               </header>
               <div class="map-canvas">
-                <svg class="route-svg" viewBox="0 0 460 540" aria-hidden="true">
+                <!--
+                  Eastern India — equirectangular projection
+                  x = (lon - 82) * 100   |   y = (26 - lat) * 100
+                  viewBox 720 × 720  ·  covers 82–89.2°E, 18.8–26°N
+                -->
+                <svg class="route-svg" id="routeSvg" viewBox="0 0 720 720" aria-hidden="true">
                   <defs>
                     <pattern id="paper" width="6" height="6" patternUnits="userSpaceOnUse">
                       <circle cx="1" cy="1" r="0.5" fill="#14181F" opacity="0.08"/>
                     </pattern>
+                    <pattern id="sea" width="8" height="8" patternUnits="userSpaceOnUse">
+                      <path d="M0 4 Q 2 2 4 4 T 8 4" fill="none" stroke="#0E5757" stroke-width="0.4" opacity="0.45"/>
+                    </pattern>
+
+                    <!-- Routes from Rourkela (285,374) to each destination -->
+                    <path id="route-puri"        d="M 285 374 Q 320 490 383 619" />
+                    <path id="route-bhubaneswar" d="M 285 374 Q 310 470 382 570" />
+                    <path id="route-kolkata"     d="M 285 374 Q 460 280 636 343" />
+                    <path id="route-ranchi"      d="M 285 374 Q 290 320 331 266" />
+                    <path id="route-jamshedpur"  d="M 285 374 Q 360 330 418 320" />
+                    <path id="route-sambalpur"   d="M 285 374 Q 220 410 197 454" />
+                    <path id="route-simlipal"    d="M 285 374 Q 380 380 473 407" />
+                    <path id="route-varanasi"    d="M 285 374 Q 150 280 97 68"  />
+                    <path id="route-cuttack"     d="M 285 374 Q 410 460 499 554" />
                   </defs>
-                  <rect width="460" height="540" fill="url(#paper)"/>
-                  <!-- compass -->
-                  <g class="compass" transform="translate(400 60)">
-                    <circle r="22" fill="none" stroke="#14181F" stroke-width="1"/>
-                    <path d="M0 -18 L4 0 L0 4 L-4 0 Z" fill="#D9472E"/>
-                    <path d="M0 18 L4 0 L0 -4 L-4 0 Z" fill="#14181F"/>
-                    <text y="-26" text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#14181F">N</text>
+
+                  <rect width="720" height="720" fill="url(#paper)"/>
+
+                  <!-- Bay of Bengal — sea fill + coastline -->
+                  <path class="sea" d="M 700 230 C 660 290, 640 350, 620 400 C 590 470, 540 530, 480 600 L 720 720 L 720 230 Z" fill="url(#sea)"/>
+                  <path class="coast"
+                    d="M 700 230 C 670 290, 645 345, 625 395 C 600 460, 555 520, 495 590 C 460 630, 420 670, 380 720"
+                    fill="none" stroke="#0E5757" stroke-width="1.1" opacity="0.7"/>
+                  <text x="595" y="540" font-family="JetBrains Mono" font-size="9" fill="#0E5757" opacity="0.7" letter-spacing="2.5" transform="rotate(50 595 540)">B A Y  ·  O F  ·  B E N G A L</text>
+
+                  <!-- Mahanadi river -->
+                  <path class="river"
+                    d="M 130 480 Q 250 460 360 510 Q 470 555 550 510"
+                    fill="none" stroke="#3a7c8c" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.65"/>
+                  <text x="290" y="498" font-family="Fraunces" font-style="italic" font-size="9" fill="#3a7c8c" opacity="0.75">Mahanadi</text>
+
+                  <!-- Ganga sliver, top-left -->
+                  <path d="M 0 90 Q 60 110 130 95 Q 200 80 280 110 Q 350 130 430 110" fill="none" stroke="#3a7c8c" stroke-width="0.7" stroke-dasharray="3 2" opacity="0.55"/>
+                  <text x="38" y="60" font-family="Fraunces" font-style="italic" font-size="9" fill="#3a7c8c" opacity="0.7">Ganga</text>
+
+                  <!-- State labels (subtle) -->
+                  <text x="170" y="540" font-family="JetBrains Mono" font-size="9" fill="#14181F" opacity="0.32" letter-spacing="3">O D I S H A</text>
+                  <text x="350" y="220" font-family="JetBrains Mono" font-size="9" fill="#14181F" opacity="0.32" letter-spacing="3">J H A R K H A N D</text>
+                  <text x="555" y="285" font-family="JetBrains Mono" font-size="9" fill="#14181F" opacity="0.32" letter-spacing="2.5">W. BENGAL</text>
+                  <text x="55"  y="200" font-family="JetBrains Mono" font-size="9" fill="#14181F" opacity="0.32" letter-spacing="2.5">U. PRADESH</text>
+
+                  <!-- Compass -->
+                  <g class="compass" transform="translate(640 90)">
+                    <circle r="24" fill="var(--paper-2,#efe5d0)" stroke="#14181F" stroke-width="1"/>
+                    <path d="M0 -20 L5 0 L0 4 L-5 0 Z" fill="#D9472E"/>
+                    <path d="M0 20 L5 0 L0 -4 L-5 0 Z" fill="#14181F"/>
+                    <text y="-29" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#14181F">N</text>
+                    <text y="35"  text-anchor="middle" font-family="JetBrains Mono" font-size="8" fill="#14181F" opacity="0.6">S</text>
                   </g>
 
-                  <!-- coast line decorative -->
-                  <path d="M40 480 Q120 470 180 490 T 360 470 Q400 460 430 480" fill="none" stroke="#14181F" stroke-width="0.6" stroke-dasharray="2 3" opacity="0.45"/>
-                  <text x="50" y="510" font-family="JetBrains Mono" font-size="9" fill="#14181F" opacity="0.55" letter-spacing="2">B A Y · O F · B E N G A L</text>
-
-                  <!-- main route -->
-                  <path id="routePath" class="route-path"
-                    d="M 80 110 C 130 130, 160 180, 180 230 S 240 320, 290 360 S 360 430, 380 470"
-                    fill="none" stroke="#D9472E" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="6 4"/>
-
-                  <!-- secondary, lighter routes -->
-                  <path d="M 80 110 Q 200 80 320 130" fill="none" stroke="#14181F" stroke-width="1" stroke-dasharray="2 4" opacity="0.45"/>
-                  <path d="M 80 110 Q 60 220 110 340" fill="none" stroke="#14181F" stroke-width="1" stroke-dasharray="2 4" opacity="0.45"/>
-                  <path d="M 80 110 Q 250 200 410 250" fill="none" stroke="#14181F" stroke-width="1" stroke-dasharray="2 4" opacity="0.35"/>
-
-                  <!-- city pins -->
-                  <g class="pin" data-city="Rourkela">
-                    <circle cx="80" cy="110" r="6" fill="#14181F"/>
-                    <circle cx="80" cy="110" r="11" fill="none" stroke="#14181F" stroke-width="1"/>
-                    <text x="92" y="106" font-family="Fraunces" font-size="14" font-weight="600" fill="#14181F">Rourkela</text>
-                    <text x="92" y="118" font-family="JetBrains Mono" font-size="8" fill="#14181F" opacity="0.6">22.26° N</text>
-                  </g>
-                  <g class="pin">
-                    <circle cx="320" cy="130" r="3" fill="#0E5757"/>
-                    <text x="328" y="133" font-family="Fraunces" font-size="11" fill="#14181F">Ranchi</text>
-                  </g>
-                  <g class="pin">
-                    <circle cx="110" cy="340" r="3" fill="#0E5757"/>
-                    <text x="118" y="343" font-family="Fraunces" font-size="11" fill="#14181F">Sambalpur</text>
-                  </g>
-                  <g class="pin">
-                    <circle cx="290" cy="360" r="3" fill="#0E5757"/>
-                    <text x="298" y="363" font-family="Fraunces" font-size="11" fill="#14181F">Bhubaneswar</text>
-                  </g>
-                  <g class="pin">
-                    <circle cx="410" cy="250" r="3" fill="#0E5757"/>
-                    <text x="364" y="240" font-family="Fraunces" font-size="11" fill="#14181F">Kolkata</text>
-                  </g>
-                  <g class="pin destination">
-                    <circle cx="380" cy="470" r="6" fill="#D9472E"/>
-                    <circle cx="380" cy="470" r="11" fill="none" stroke="#D9472E" stroke-width="1.4"/>
-                    <text x="316" y="492" font-family="Fraunces" font-size="14" font-weight="600" fill="#D9472E">Puri</text>
+                  <!-- All routes, rendered (active gets highlighted via class) -->
+                  <g class="routes-layer">
+                    <use href="#route-puri"        class="route-line" data-route="route-puri"/>
+                    <use href="#route-bhubaneswar" class="route-line" data-route="route-bhubaneswar"/>
+                    <use href="#route-kolkata"     class="route-line" data-route="route-kolkata"/>
+                    <use href="#route-ranchi"      class="route-line" data-route="route-ranchi"/>
+                    <use href="#route-jamshedpur"  class="route-line" data-route="route-jamshedpur"/>
+                    <use href="#route-sambalpur"   class="route-line" data-route="route-sambalpur"/>
+                    <use href="#route-simlipal"    class="route-line" data-route="route-simlipal"/>
+                    <use href="#route-varanasi"    class="route-line" data-route="route-varanasi"/>
+                    <use href="#route-cuttack"     class="route-line" data-route="route-cuttack"/>
                   </g>
 
-                  <!-- moving bus -->
-                  <g class="bus-mover">
-                    <g transform="translate(-13,-7)">
-                      <rect x="0" y="0" width="26" height="13" rx="2" fill="#14181F"/>
-                      <rect x="2" y="2" width="6" height="4" fill="#E9A23B"/>
-                      <rect x="10" y="2" width="6" height="4" fill="#E9A23B"/>
-                      <rect x="18" y="2" width="5" height="4" fill="#E9A23B"/>
-                      <circle cx="6" cy="13" r="2" fill="#14181F"/>
-                      <circle cx="20" cy="13" r="2" fill="#14181F"/>
+                  <!-- City pins -->
+                  <g class="pin pin-origin">
+                    <circle cx="285" cy="374" r="8" fill="#14181F"/>
+                    <circle cx="285" cy="374" r="14" fill="none" stroke="#14181F" stroke-width="1.2"/>
+                    <circle cx="285" cy="374" r="20" fill="none" stroke="#14181F" stroke-width="0.6" opacity="0.4"/>
+                    <text x="297" y="370" font-family="Fraunces" font-size="15" font-weight="700" fill="#14181F">Rourkela</text>
+                    <text x="297" y="384" font-family="JetBrains Mono" font-size="8" fill="#14181F" opacity="0.6">22.26°N · 84.85°E · ORIGIN</text>
+                  </g>
+
+                  <g class="pin" id="pin-route-puri">
+                    <circle cx="383" cy="619" r="4"/><text x="392" y="623">Puri</text>
+                  </g>
+                  <g class="pin" id="pin-route-bhubaneswar">
+                    <circle cx="382" cy="570" r="4"/><text x="392" y="568">Bhubaneswar</text>
+                  </g>
+                  <g class="pin" id="pin-route-kolkata">
+                    <circle cx="636" cy="343" r="4"/><text x="582" y="335">Kolkata</text>
+                  </g>
+                  <g class="pin" id="pin-route-ranchi">
+                    <circle cx="331" cy="266" r="4"/><text x="340" y="262">Ranchi</text>
+                  </g>
+                  <g class="pin" id="pin-route-jamshedpur">
+                    <circle cx="418" cy="320" r="4"/><text x="427" y="316">Jamshedpur</text>
+                  </g>
+                  <g class="pin" id="pin-route-sambalpur">
+                    <circle cx="197" cy="454" r="4"/><text x="135" y="448">Sambalpur</text>
+                  </g>
+                  <g class="pin" id="pin-route-simlipal">
+                    <circle cx="473" cy="407" r="4"/><text x="482" y="411">Simlipal</text>
+                  </g>
+                  <g class="pin" id="pin-route-varanasi">
+                    <circle cx="97" cy="68" r="4"/><text x="106" y="64">Varanasi</text>
+                  </g>
+                  <g class="pin" id="pin-route-cuttack">
+                    <circle cx="499" cy="554" r="4"/><text x="508" y="552">Cuttack</text>
+                  </g>
+                  <g class="pin pin-minor">
+                    <circle cx="409" cy="611" r="2.6"/><text x="416" y="615" font-size="10">Konark</text>
+                  </g>
+                  <g class="pin pin-minor">
+                    <circle cx="204" cy="388" r="2.6"/><text x="138" y="384" font-size="10">Sundargarh</text>
+                  </g>
+                  <g class="pin pin-minor">
+                    <circle cx="197" cy="414" r="2.6"/><text x="138" y="425" font-size="10">Jharsuguda</text>
+                  </g>
+                  <g class="pin pin-minor">
+                    <circle cx="415" cy="233" r="2.6"/><text x="424" y="229" font-size="10">Bokaro</text>
+                  </g>
+
+                  <!-- Moving bus (replaced wholesale on route change) -->
+                  <g class="bus-mover" id="busMover">
+                    <g transform="translate(-15,-8)">
+                      <rect x="0" y="0" width="30" height="15" rx="2.5" fill="#14181F"/>
+                      <rect x="2"  y="2.5" width="6" height="5" fill="#E9A23B"/>
+                      <rect x="10" y="2.5" width="6" height="5" fill="#E9A23B"/>
+                      <rect x="18" y="2.5" width="5" height="5" fill="#E9A23B"/>
+                      <rect x="25" y="3" width="3" height="4" fill="#D9472E"/>
+                      <circle cx="7" cy="15" r="2.4" fill="#14181F"/>
+                      <circle cx="23" cy="15" r="2.4" fill="#14181F"/>
                     </g>
-                    <animateMotion dur="14s" repeatCount="indefinite" rotate="auto">
-                      <mpath href="#routePath"/>
+                    <animateMotion id="busMotion" dur="12s" repeatCount="indefinite" rotate="auto">
+                      <mpath id="busMpath" href="#route-puri"/>
                     </animateMotion>
                   </g>
                 </svg>
@@ -369,8 +434,8 @@
                 </span>
               </div>
               <footer class="map-card-f">
-                <span>◀ scroll to depart</span>
-                <span>RKL → PUR · 500 KM</span>
+                <span id="mapState">PREVIEW · click a route below</span>
+                <span id="mapDist">RKL → PUR · 500 KM · 9H 30M</span>
               </footer>
             </figure>
           </aside>
@@ -411,8 +476,8 @@
             <span class="sh-num">§ 01</span>
             <span class="sh-tag">DEPARTURES</span>
           </div>
-          <h2 class="display">Today's <em>departures.</em></h2>
-          <p>Outstation routes from Rourkela — quoted, confirmed and on the road in a single call.</p>
+          <h2 class="display">Across Odisha.<br/>And <em>beyond</em>.</h2>
+          <p>Inter-state departures from Rourkela — across Odisha, Jharkhand, West Bengal and Uttar Pradesh. <em>Click any route to preview it on the map.</em></p>
         </div>
 
         <div class="board">
@@ -426,15 +491,15 @@
           </div>
 
           <div class="board-rows" id="boardRows">
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="PURI"          data-dist="500 KM" data-dur="9H 30M" data-from="₹ on call"  data-tag="JAGANNATH · BEACH · KONARK"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="BHUBANESWAR"   data-dist="370 KM" data-dur="7H 00M" data-from="₹ on call"  data-tag="STATE CAPITAL · CORPORATE"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="KOLKATA"       data-dist="540 KM" data-dur="10H 30M" data-from="₹ on call" data-tag="SLEEPER · GROUPS"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="RANCHI"        data-dist="210 KM" data-dur="4H 30M" data-from="₹ on call"  data-tag="CORPORATE · FAMILY"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="JAMSHEDPUR"    data-dist="180 KM" data-dur="3H 30M" data-from="₹ on call"  data-tag="OFFICE · INDUSTRIAL"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="SAMBALPUR"     data-dist="165 KM" data-dur="3H 30M" data-from="₹ on call"  data-tag="DAY TRIP"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="SIMLIPAL"      data-dist="230 KM" data-dur="5H 00M" data-from="₹ on call"  data-tag="SAFARI · WATERFALL"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="VARANASI"      data-dist="880 KM" data-dur="16H 00M" data-from="₹ on call" data-tag="TIRTH YATRA"></a>
-            <a href="#book" class="row" data-row data-status="ON TIME" data-dest="CUTTACK"       data-dist="350 KM" data-dur="7H 00M" data-from="₹ on call"  data-tag="BALI YATRA · SHOPPING"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="PURI"          data-dist="500 KM" data-dur="9H 30M" data-from="₹ on call"  data-tag="JAGANNATH · BEACH · KONARK"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="BHUBANESWAR"   data-dist="370 KM" data-dur="7H 00M" data-from="₹ on call"  data-tag="STATE CAPITAL · CORPORATE"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="KOLKATA"       data-dist="540 KM" data-dur="10H 30M" data-from="₹ on call" data-tag="SLEEPER · GROUPS"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="RANCHI"        data-dist="210 KM" data-dur="4H 30M" data-from="₹ on call"  data-tag="CORPORATE · FAMILY"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="JAMSHEDPUR"    data-dist="180 KM" data-dur="3H 30M" data-from="₹ on call"  data-tag="OFFICE · INDUSTRIAL"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="SAMBALPUR"     data-dist="165 KM" data-dur="3H 30M" data-from="₹ on call"  data-tag="DAY TRIP"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="SIMLIPAL"      data-dist="230 KM" data-dur="5H 00M" data-from="₹ on call"  data-tag="SAFARI · WATERFALL"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="VARANASI"      data-dist="880 KM" data-dur="16H 00M" data-from="₹ on call" data-tag="TIRTH YATRA"></a>
+            <a href="#top" class="row" data-row data-status="ON TIME" data-dest="CUTTACK"       data-dist="350 KM" data-dur="7H 00M" data-from="₹ on call"  data-tag="BALI YATRA · SHOPPING"></a>
           </div>
 
           <div class="board-foot">
@@ -453,7 +518,7 @@
             <span class="sh-tag">THE FLEET</span>
           </div>
           <h2 class="display"><em>Six</em> ways to travel.<br/>One number to call.</h2>
-          <p>From a 50-seater wedding coach to a chauffeured sedan — every vehicle, fully insured, GPS-tracked, professionally driven.</p>
+          <p>Inter-state-ready vehicles — from a 50-seater wedding coach to a chauffeured sedan. Every vehicle fully insured, GPS-tracked, professionally driven across state lines.</p>
         </div>
 
         <div class="stubs">
@@ -653,8 +718,8 @@
             <span class="sh-num">§ 05</span>
             <span class="sh-tag">COVERAGE</span>
           </div>
-          <h2 class="display">Across Rourkela.<br/>And well <em>beyond</em>.</h2>
-          <p>Pickup, drop-off and travel from any of these neighbourhoods and towns.</p>
+          <h2 class="display">Four states.<br/>One <em>doorway</em>.</h2>
+          <p>Pickup and drop-off across Odisha, Jharkhand, West Bengal and Uttar Pradesh — from your neighbourhood in Rourkela to wherever you're headed.</p>
         </div>
 
         <div class="chips" id="chipsField">
