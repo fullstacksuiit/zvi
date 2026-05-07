@@ -1263,7 +1263,17 @@ h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-tra
 }
 [data-reveal].in { opacity: 1; transform: translateY(0); }
 
-/* (char-by-char heading reveal removed for refinement) */
+/* Section headline clip-path mask reveal — clean, no char splitting */
+.section-head .display {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.1s cubic-bezier(.7,0,.2,1);
+  will-change: clip-path;
+}
+.section-head .display.is-revealed { clip-path: inset(0 0 0 0); }
+
+/* Magnetic button: faster transform reset, smoother glide */
+.btn-primary { transition: transform 0.4s cubic-bezier(.2,.8,.1,1), box-shadow 0.3s, color 0.3s; }
+.btn-primary.is-magnet { transition: transform 0.05s linear, box-shadow 0.3s, color 0.3s; }
 
 /* ===== Coverage chips: directional ink-fill ===== */
 .chip {

@@ -285,17 +285,40 @@
   // Default: Puri
   setTimeout(() => setActiveRoute("PURI"), 500);
 
-  // ---------- Departures board: split-flap rendering ----------
-  // Renders each row's data-* fields as columns of split-flap tiles, animated in stagger.
-  const FLAP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 →·-/₹";
+  // ---------- Departures board: Solari split-flap rendering ----------
+  // Real flap-boards cycle each char through random letters before settling.
+  const FLAP_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·→/";
   function makeFlapsHTML(text) {
     if (!text) return "";
     const chars = String(text).split("");
     return `<span class="flaps">` + chars.map((c, i) => {
-      const ch = c === " " ? "&nbsp;" : c;
+      const ch = c === " " ? " " : c;
+      const target = ch === " " ? "&nbsp;" : ch;
       const d = (i * 0.04).toFixed(2);
-      return `<span class="flap"><span class="flap-inner" style="animation-delay:${d}s">${ch}</span></span>`;
+      return `<span class="flap"><span class="flap-inner" data-target="${target}" style="animation-delay:${d}s">${target}</span></span>`;
     }).join("") + `</span>`;
+  }
+  // After a row is rendered, cycle each flap-inner through random chars before landing.
+  function shuffleFlaps(scope, opts) {
+    const cycles = (opts && opts.cycles) || 7;
+    const interval = (opts && opts.interval) || 38;
+    const stagger = (opts && opts.stagger) || 28;
+    scope.querySelectorAll(".flap-inner").forEach((el, idx) => {
+      const target = el.dataset.target || el.textContent;
+      if (target === "&nbsp;" || target === " ") return;
+      let i = 0;
+      setTimeout(() => {
+        const id = setInterval(() => {
+          if (i >= cycles - 1) {
+            el.innerHTML = target;
+            clearInterval(id);
+          } else {
+            el.textContent = FLAP_CHARS[Math.floor(Math.random() * FLAP_CHARS.length)];
+          }
+          i++;
+        }, interval);
+      }, idx * stagger);
+    });
   }
 
   function buildRow(row) {
@@ -313,6 +336,8 @@
       <span class="from">${from}</span>
       <span class="arrow-cell">→</span>
     `;
+    // Solari shuffle the dist/dur columns
+    shuffleFlaps(row);
   }
 
   const boardRows = document.querySelectorAll(".row[data-row]");
@@ -421,33 +446,7 @@
     s.style.height = h + "%";
   });
 
-  // ---------- Char-by-char reveal for section headings ----------
-  function splitChars(el) {
-    if (!el || el.dataset.split) return;
-    el.dataset.split = "1";
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
-    const textNodes = [];
-    let node;
-    while ((node = walker.nextNode())) textNodes.push(node);
-    let i = 0;
-    textNodes.forEach(tn => {
-      const frag = document.createDocumentFragment();
-      [...tn.nodeValue].forEach(ch => {
-        if (ch === " " || ch === " " || ch === "\n") {
-          frag.appendChild(document.createTextNode(ch));
-        } else {
-          const s = document.createElement("span");
-          s.className = "ch";
-          s.style.setProperty("--i", i++);
-          s.textContent = ch;
-          frag.appendChild(s);
-        }
-      });
-      tn.parentNode.replaceChild(frag, tn);
-    });
-  }
-  const headings = document.querySelectorAll(".section-head .display");
-  headings.forEach(splitChars);
+  // ---------- Section headline clip-path reveal ----------
   const headingObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -455,8 +454,8 @@
         headingObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.25 });
-  headings.forEach(h => headingObserver.observe(h));
+  }, { threshold: 0.2 });
+  document.querySelectorAll(".section-head .display").forEach(h => headingObserver.observe(h));
 
   // ---------- Stub cards stagger reveal ----------
   const stubs = document.querySelectorAll(".stub");
@@ -498,6 +497,113 @@
     };
     passEl.addEventListener("mousemove", onMove);
     passEl.addEventListener("mouseleave", onLeave);
+  }
+
+  // ---------- Map: smooth viewBox pan + zoom to active route ----------
+  const ROUTE_SVG = document.getElementById("routeSvg");
+  const FULL_VIEW = [0, 0, 720, 720];
+  function getRouteBbox(routeId) {
+    // Origin (Rourkela) at 285,374; destination from #pin-<routeId> circle.
+    const pin = document.querySelector(`#pin-${routeId} circle`);
+    if (!pin) return null;
+    const ox = 285, oy = 374;
+    const dx = parseFloat(pin.getAttribute("cx"));
+    const dy = parseFloat(pin.getAttribute("cy"));
+    const minX = Math.min(ox, dx), maxX = Math.max(ox, dx);
+    const minY = Math.min(oy, dy), maxY = Math.max(oy, dy);
+    const w = maxX - minX, h = maxY - minY;
+    const padX = Math.max(120, w * 0.55);
+    const padY = Math.max(120, h * 0.55);
+    let bw = w + 2 * padX;
+    let bh = h + 2 * padY;
+    // Keep square (matches SVG's 1:1 aspect)
+    const side = Math.max(bw, bh);
+    bw = bh = side;
+    // Clamp to canvas
+    const cx = (minX + maxX) / 2;
+    const cy = (minY + maxY) / 2;
+    let x = cx - bw / 2;
+    let y = cy - bh / 2;
+    if (x < -40) x = -40;
+    if (y < -40) y = -40;
+    if (x + bw > 760) x = 760 - bw;
+    if (y + bh > 760) y = 760 - bh;
+    return [x, y, bw, bh];
+  }
+  let viewRaf = null;
+  function animateViewBox(target, duration) {
+    if (!ROUTE_SVG) return;
+    duration = duration || 900;
+    const cur = ROUTE_SVG.getAttribute("viewBox").split(/[ ,]+/).map(parseFloat);
+    const start = performance.now();
+    if (viewRaf) cancelAnimationFrame(viewRaf);
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    function frame(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const e = ease(t);
+      const v = [
+        cur[0] + (target[0] - cur[0]) * e,
+        cur[1] + (target[1] - cur[1]) * e,
+        cur[2] + (target[2] - cur[2]) * e,
+        cur[3] + (target[3] - cur[3]) * e,
+      ];
+      ROUTE_SVG.setAttribute("viewBox", v.join(" "));
+      if (t < 1) viewRaf = requestAnimationFrame(frame);
+      else viewRaf = null;
+    }
+    viewRaf = requestAnimationFrame(frame);
+  }
+  // Hook into route activation: pan/zoom whenever setActiveRoute fires.
+  const _origSetActiveRoute = setActiveRoute;
+  setActiveRoute = function (destKey, opts) {
+    _origSetActiveRoute(destKey, opts);
+    const r = ROUTES[destKey];
+    if (r) {
+      const box = getRouteBbox(r.id);
+      if (box) animateViewBox(box, 900);
+    }
+  };
+  // Reset view if user hovers off the board (gentle ambient feel)
+  const boardEl = document.querySelector(".board");
+  if (boardEl && matchMedia("(hover: hover)").matches) {
+    let resetTimer = null;
+    boardEl.addEventListener("mouseleave", () => {
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => animateViewBox(FULL_VIEW, 1200), 600);
+    });
+    boardEl.addEventListener("mouseenter", () => clearTimeout(resetTimer));
+  }
+
+  // ---------- Magnetic primary buttons ----------
+  if (matchMedia("(hover: hover)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const magnetBtns = Array.from(document.querySelectorAll(".btn-primary"));
+    let magRaf = null;
+    function onMagMove(e) {
+      if (magRaf) return;
+      magRaf = requestAnimationFrame(() => {
+        magnetBtns.forEach(btn => {
+          const rect = btn.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const dx = e.clientX - cx;
+          const dy = e.clientY - cy;
+          const dist = Math.hypot(dx, dy);
+          const range = 130;
+          if (dist > range) {
+            if (btn.classList.contains("is-magnet")) {
+              btn.classList.remove("is-magnet");
+              btn.style.transform = "";
+            }
+            return;
+          }
+          btn.classList.add("is-magnet");
+          const f = (1 - dist / range) * 0.28;
+          btn.style.transform = `translate(${dx * f}px, ${dy * f}px)`;
+        });
+        magRaf = null;
+      });
+    }
+    window.addEventListener("mousemove", onMagMove, { passive: true });
   }
 
   // ---------- Page-load curtain cleanup ----------
