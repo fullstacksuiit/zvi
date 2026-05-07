@@ -4,42 +4,19 @@
 
   <url>
     <loc>https://www.zainventures.in/</loc>
-    <lastmod>2026-04-25</lastmod>
+    <lastmod>2026-05-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://www.zainventures.in/logo.png</image:loc>
-      <image:title>Zain Ventures India - Bus Hire Rourkela</image:title>
-      <image:caption>Bus booking and rental service in Rourkela, Odisha</image:caption>
+      <image:title>Zain Ventures India — Inter-state Bus Hire from Rourkela</image:title>
+      <image:caption>AC and Non-AC bus rental, tempo travellers, cars and trucks for inter-state travel from Rourkela, Odisha across Jharkhand, West Bengal and Uttar Pradesh.</image:caption>
     </image:image>
   </url>
 
-  <url>
-    <loc>https://www.zainventures.in/#services</loc>
-    <lastmod>2026-04-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://www.zainventures.in/#fleet</loc>
-    <lastmod>2026-04-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.zainventures.in/#routes</loc>
-    <lastmod>2026-04-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://www.zainventures.in/#contact</loc>
-    <lastmod>2026-04-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
+  <url><loc>https://www.zainventures.in/#routes</loc><lastmod>2026-05-07</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.zainventures.in/#fleet</loc><lastmod>2026-05-07</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.zainventures.in/#why</loc><lastmod>2026-05-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.zainventures.in/#faq</loc><lastmod>2026-05-07</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.zainventures.in/#book</loc><lastmod>2026-05-07</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
 </urlset>

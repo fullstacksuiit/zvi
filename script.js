@@ -70,31 +70,72 @@
   });
 
   // ---------- Route switching: bus follows the selected destination ----------
-  // Map a board row's data-dest → SVG path id and human-readable label.
+  // Map destination key → SVG path id, station-style code, name, geometry.
   const ROUTES = {
-    PURI:        { id: "route-puri",        label: "PUR", km: "500 KM", dur: "9H 30M",  ms: 12000 },
-    BHUBANESWAR: { id: "route-bhubaneswar", label: "BBI", km: "370 KM", dur: "7H 00M",  ms: 10000 },
-    KOLKATA:     { id: "route-kolkata",     label: "CCU", km: "540 KM", dur: "10H 30M", ms: 13000 },
-    RANCHI:      { id: "route-ranchi",      label: "IXR", km: "210 KM", dur: "4H 30M",  ms: 7000  },
-    JAMSHEDPUR:  { id: "route-jamshedpur",  label: "IXW", km: "180 KM", dur: "3H 30M",  ms: 6500  },
-    SAMBALPUR:   { id: "route-sambalpur",   label: "SBP", km: "165 KM", dur: "3H 30M",  ms: 6500  },
-    SIMLIPAL:    { id: "route-simlipal",    label: "SIM", km: "230 KM", dur: "5H 00M",  ms: 7500  },
-    VARANASI:    { id: "route-varanasi",    label: "VNS", km: "880 KM", dur: "16H 00M", ms: 17000 },
-    CUTTACK:     { id: "route-cuttack",     label: "CTC", km: "350 KM", dur: "7H 00M",  ms: 9500  },
+    PURI:        { id: "route-puri",        label: "PUR", name: "Puri",        km: "500 KM", dur: "9H 30M",  ms: 12000 },
+    BHUBANESWAR: { id: "route-bhubaneswar", label: "BBI", name: "Bhubaneswar", km: "370 KM", dur: "7H 00M",  ms: 10000 },
+    KOLKATA:     { id: "route-kolkata",     label: "CCU", name: "Kolkata",     km: "540 KM", dur: "10H 30M", ms: 13000 },
+    RANCHI:      { id: "route-ranchi",      label: "IXR", name: "Ranchi",      km: "210 KM", dur: "4H 30M",  ms: 7000  },
+    JAMSHEDPUR:  { id: "route-jamshedpur",  label: "IXW", name: "Jamshedpur",  km: "180 KM", dur: "3H 30M",  ms: 6500  },
+    SAMBALPUR:   { id: "route-sambalpur",   label: "SBP", name: "Sambalpur",   km: "165 KM", dur: "3H 30M",  ms: 6500  },
+    SIMLIPAL:    { id: "route-simlipal",    label: "SIM", name: "Simlipal",    km: "230 KM", dur: "5H 00M",  ms: 7500  },
+    VARANASI:    { id: "route-varanasi",    label: "VNS", name: "Varanasi",    km: "880 KM", dur: "16H 00M", ms: 17000 },
+    CUTTACK:     { id: "route-cuttack",     label: "CTC", name: "Cuttack",     km: "350 KM", dur: "7H 00M",  ms: 9500  },
+    // Common alternates / extras useful for free-text "to" input
+    KONARK:      { id: "route-puri",        label: "KNK", name: "Konark",      km: "490 KM", dur: "9H 30M",  ms: 12000 },
+    DEOGHAR:     { id: "route-varanasi",    label: "DGR", name: "Deoghar",     km: "420 KM", dur: "9H 00M",  ms: 12000 },
+    GAYA:        { id: "route-varanasi",    label: "GAY", name: "Gaya",        km: "660 KM", dur: "13H 00M", ms: 15000 },
+    BOKARO:      { id: "route-jamshedpur",  label: "BKO", name: "Bokaro",      km: "230 KM", dur: "5H 00M",  ms: 7500  },
+    DHANBAD:     { id: "route-jamshedpur",  label: "DHN", name: "Dhanbad",     km: "260 KM", dur: "5H 30M",  ms: 8000  },
   };
 
   const mapStateEl = document.getElementById("mapState");
   const mapDistEl  = document.getElementById("mapDist");
 
+  // Boarding-pass refs
+  const passFromCode = document.getElementById("passFromCode");
+  const passFromName = document.getElementById("passFromName");
+  const passToCode   = document.getElementById("passToCode");
+  const passToName   = document.getElementById("passToName");
+  const passR        = document.querySelector(".pass-r");
+
+  function updatePassPanel(dest) {
+    if (!passToCode) return;
+    if (dest && ROUTES[dest]) {
+      const r = ROUTES[dest];
+      passToCode.textContent = r.label;
+      passToName.textContent = r.name;
+      if (passR) passR.classList.add("is-active");
+      // Force animation restart
+      passToCode.style.animation = "none";
+      void passToCode.getBoundingClientRect();
+      passToCode.style.animation = "";
+    } else {
+      passToCode.textContent = "—";
+      passToName.textContent = "choose route";
+      if (passR) passR.classList.remove("is-active");
+    }
+  }
+
+  // Derive an IATA-ish code from any free-text "to" value
+  function codeFor(text) {
+    const upper = (text || "").trim().toUpperCase();
+    if (!upper) return null;
+    if (ROUTES[upper]) return upper;
+    // Fuzzy: starts-with match against known dests
+    const keys = Object.keys(ROUTES);
+    const startsWith = keys.find(k => k.startsWith(upper));
+    if (startsWith) return startsWith;
+    return null;
+  }
+
   function setActiveRoute(destKey) {
     const r = ROUTES[destKey];
     if (!r) return;
 
-    // Toggle route line classes
     document.querySelectorAll(".route-line").forEach(el => {
       el.classList.toggle("is-active", el.getAttribute("data-route") === r.id);
     });
-    // Force CSS animation restart by toggling
     const activeEl = document.querySelector(`.route-line[data-route="${r.id}"]`);
     if (activeEl) {
       activeEl.classList.remove("is-active");
@@ -102,12 +143,10 @@
       activeEl.classList.add("is-active");
     }
 
-    // Toggle pin highlighting
     document.querySelectorAll(".pin").forEach(p => p.classList.remove("is-active"));
     const pin = document.getElementById("pin-" + r.id);
     if (pin) pin.classList.add("is-active");
 
-    // Replace bus-mover wholesale to reliably restart animateMotion
     const oldBus = document.getElementById("busMover");
     if (oldBus) {
       const newBus = oldBus.cloneNode(true);
@@ -118,33 +157,30 @@
       oldBus.replaceWith(newBus);
     }
 
-    // Update map footer
-    if (mapStateEl) mapStateEl.textContent = "● ROUTE PREVIEW · " + destKey;
+    if (mapStateEl) mapStateEl.textContent = "● LIVE ROUTE · " + r.name.toUpperCase();
     if (mapDistEl)  mapDistEl.textContent  = `RKL → ${r.label} · ${r.km} · ${r.dur}`;
 
-    // Update pass form's "to" field if present (capitalise nicely)
+    // Sync booking form's "to" field & pass panel
     const toInput = document.querySelector('.pass-form input[name="to"]');
-    if (toInput) toInput.value = destKey.charAt(0) + destKey.slice(1).toLowerCase();
+    if (toInput && toInput.value.toUpperCase() !== r.name.toUpperCase()) {
+      toInput.value = r.name;
+    }
+    updatePassPanel(destKey);
   }
 
-  // Wire each row: click → preview route + scroll to map; hover (desktop) → quick preview
+  // Wire rows: click & hover preview the route on the (sticky) map alongside.
   function wireRouteRows() {
     document.querySelectorAll(".row[data-row]").forEach(row => {
       const dest = row.dataset.dest;
       if (!ROUTES[dest]) return;
-
       row.addEventListener("click", (e) => {
         e.preventDefault();
         setActiveRoute(dest);
-        const map = document.querySelector(".map-card");
-        if (map) map.scrollIntoView({ behavior: "smooth", block: "center" });
       });
-
-      // Subtle hover preview on desktop (no scroll)
       if (matchMedia("(hover: hover)").matches) {
         let hoverTimer = null;
         row.addEventListener("mouseenter", () => {
-          hoverTimer = setTimeout(() => setActiveRoute(dest), 250);
+          hoverTimer = setTimeout(() => setActiveRoute(dest), 220);
         });
         row.addEventListener("mouseleave", () => clearTimeout(hoverTimer));
       }
@@ -152,8 +188,44 @@
   }
   wireRouteRows();
 
-  // Set initial active route (Puri)
-  setTimeout(() => setActiveRoute("PURI"), 600);
+  // Live-update the boarding pass when the form's "from"/"to" fields change
+  function wireFormSync() {
+    const toInput   = document.querySelector('.pass-form input[name="to"]');
+    const fromInput = document.querySelector('.pass-form input[name="from"]');
+
+    if (toInput) {
+      const onTo = () => {
+        const code = codeFor(toInput.value);
+        if (code) {
+          // Update pass panel + map without re-firing form sync (guarded by setActiveRoute)
+          setActiveRoute(code);
+        } else {
+          updatePassPanel(null);
+        }
+      };
+      toInput.addEventListener("input", onTo);
+      toInput.addEventListener("change", onTo);
+    }
+
+    if (fromInput && passFromCode) {
+      const onFrom = () => {
+        const v = (fromInput.value || "").trim();
+        if (!v) {
+          passFromCode.textContent = "RKL";
+          passFromName.textContent = "Rourkela";
+          return;
+        }
+        // Default behaviour: first 3 letters uppercased, full name preserved
+        passFromCode.textContent = v.replace(/\s+/g, "").slice(0, 3).toUpperCase() || "RKL";
+        passFromName.textContent = v;
+      };
+      fromInput.addEventListener("input", onFrom);
+    }
+  }
+  wireFormSync();
+
+  // Default: Puri
+  setTimeout(() => setActiveRoute("PURI"), 500);
 
   // ---------- Departures board: split-flap rendering ----------
   // Renders each row's data-* fields as columns of split-flap tiles, animated in stagger.
@@ -199,18 +271,8 @@
       }
     });
   }, { threshold: 0.05 });
-  boardRows.forEach(r => {
-    // Pre-fill so dimensions are stable
-    r.innerHTML = `
-      <span class="status">${r.dataset.status||""}</span>
-      <span class="dest">${r.dataset.dest||""}<small>${r.dataset.tag||""}</small></span>
-      <span class="dist">${r.dataset.dist||""}</span>
-      <span class="dur">${r.dataset.dur||""}</span>
-      <span class="from">${r.dataset.from||""}</span>
-      <span class="arrow-cell">→</span>
-    `;
-    boardObserver.observe(r);
-  });
+  // HTML is pre-populated for SEO/no-JS — only attach observer for animation.
+  boardRows.forEach(r => boardObserver.observe(r));
 
   // ---------- Periodic re-flap of board (subtle "live update" feel) ----------
   setInterval(() => {
