@@ -57,7 +57,7 @@
   document.querySelectorAll(".menu nav a, .menu .menu-cta a").forEach(a => a.addEventListener("click", () => setMenu(false)));
 
   // ---------- Smooth scroll for hash links ----------
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
+  document.querySelectorAll('a[href^="#"]:not(.row)').forEach(a => {
     a.addEventListener("click", e => {
       const href = a.getAttribute("href");
       if (!href || href === "#") return;
