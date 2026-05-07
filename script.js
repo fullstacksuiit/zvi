@@ -99,22 +99,56 @@
   const passToName   = document.getElementById("passToName");
   const passR        = document.querySelector(".pass-r");
 
-  function updatePassPanel(dest) {
+  // Derive a 3-letter station-style code from any text.
+  // Prefers a curated/IATA-real code from ROUTES; falls back to first
+  // 3 alphabetic chars of the input (uppercased).
+  function codeFromText(text) {
+    const t = (text || "").trim();
+    if (!t) return null;
+    const upper = t.toUpperCase();
+    if (ROUTES[upper] && ROUTES[upper].label) return ROUTES[upper].label;
+    // Fuzzy: starts-with match against known dests
+    const startsWith = Object.keys(ROUTES).find(k => k.startsWith(upper));
+    if (startsWith && ROUTES[startsWith].label) return ROUTES[startsWith].label;
+    // Final fallback: first 3 alpha chars
+    const stripped = upper.replace(/[^A-Z]/g, "");
+    return stripped.slice(0, 3) || null;
+  }
+
+  function titleCase(s) {
+    return (s || "").trim().split(/\s+/).map(w => w[0] ? w[0].toUpperCase() + w.slice(1).toLowerCase() : w).join(" ");
+  }
+
+  // Update the boarding pass for ANY destination text, even ones with no
+  // route on our map. The pass always wins a 3-letter code.
+  function updatePassFromText(text) {
     if (!passToCode) return;
-    if (dest && ROUTES[dest]) {
-      const r = ROUTES[dest];
-      passToCode.textContent = r.label;
-      passToName.textContent = r.name;
-      if (passR) passR.classList.add("is-active");
-      // Force animation restart
-      passToCode.style.animation = "none";
-      void passToCode.getBoundingClientRect();
-      passToCode.style.animation = "";
-    } else {
+    const t = (text || "").trim();
+    if (!t) {
       passToCode.textContent = "—";
       passToName.textContent = "choose route";
       if (passR) passR.classList.remove("is-active");
+      return;
     }
+    const upper = t.toUpperCase();
+    const route = ROUTES[upper] || ROUTES[Object.keys(ROUTES).find(k => k.startsWith(upper)) || ""];
+    if (route) {
+      passToCode.textContent = route.label;
+      passToName.textContent = route.name;
+    } else {
+      passToCode.textContent = codeFromText(t) || "—";
+      passToName.textContent = titleCase(t);
+    }
+    if (passR) passR.classList.add("is-active");
+    passToCode.style.animation = "none";
+    void passToCode.getBoundingClientRect();
+    passToCode.style.animation = "";
+  }
+  // Backwards-compat wrapper for setActiveRoute callers
+  function updatePassPanel(dest) {
+    if (!dest) { updatePassFromText(""); return; }
+    const r = ROUTES[dest];
+    updatePassFromText(r ? r.name : dest);
   }
 
   // Derive an IATA-ish code from any free-text "to" value
@@ -197,13 +231,11 @@
 
     if (toInput) {
       const onTo = () => {
+        // Always reflect text in the pass — even Mumbai / Delhi / unknown cities.
+        updatePassFromText(toInput.value);
+        // If the text matches a known route, also preview it on the map.
         const code = codeFor(toInput.value);
-        if (code) {
-          // Update pass panel + map without re-firing form sync (guarded by setActiveRoute)
-          setActiveRoute(code);
-        } else {
-          updatePassPanel(null);
-        }
+        if (code) setActiveRoute(code, { fillForm: false });
       };
       toInput.addEventListener("input", onTo);
       toInput.addEventListener("change", onTo);
@@ -217,11 +249,32 @@
           passFromName.textContent = "Rourkela";
           return;
         }
-        // Default behaviour: first 3 letters uppercased, full name preserved
-        passFromCode.textContent = v.replace(/\s+/g, "").slice(0, 3).toUpperCase() || "RKL";
-        passFromName.textContent = v;
+        passFromCode.textContent = codeFromText(v) || "RKL";
+        passFromName.textContent = titleCase(v);
       };
       fromInput.addEventListener("input", onFrom);
+    }
+
+    // Date — only show on the boarding pass when it's filled
+    const dateInput = document.querySelector('.pass-form input[name="date"]');
+    const passDate = document.getElementById("passDate");
+    const passDateValue = document.getElementById("passDateValue");
+    if (dateInput && passDate && passDateValue) {
+      const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+      const updateDate = () => {
+        if (!dateInput.value) { passDate.hidden = true; return; }
+        const [y, m, d] = dateInput.value.split("-");
+        if (!y || !m || !d) { passDate.hidden = true; return; }
+        passDateValue.textContent = `${d} ${MONTHS[parseInt(m, 10) - 1]} '${y.slice(-2)}`;
+        passDate.hidden = false;
+        // Pop animation
+        passDate.style.animation = "none";
+        void passDate.getBoundingClientRect();
+        passDate.style.animation = "";
+      };
+      dateInput.addEventListener("input", updateDate);
+      dateInput.addEventListener("change", updateDate);
+      updateDate();
     }
   }
   wireFormSync();
