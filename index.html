@@ -843,57 +843,77 @@
                 <option value="Delhi"></option>
                 <option value="Hyderabad"></option>
               </datalist>
-              <div class="row">
-                <div class="field">
-                  <span class="field-tag">Vehicle</span>
-                  <div class="vfx" id="vfx">
-                    <button type="button" class="vfx-trigger" id="vfxTrigger" aria-haspopup="listbox" aria-expanded="false">
-                      <span class="vfx-icon" id="vfxIcon" aria-hidden="true">
-                        <svg viewBox="0 0 32 22"><rect x="3" y="3" width="26" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 12 h26" stroke="currentColor" stroke-width="1"/><circle cx="9" cy="18" r="2" fill="currentColor"/><circle cx="23" cy="18" r="2" fill="currentColor"/></svg>
-                      </span>
-                      <span class="vfx-label" id="vfxLabel">Choose a vehicle…</span>
-                      <span class="vfx-cap" id="vfxCap"></span>
-                      <span class="vfx-caret" aria-hidden="true">▾</span>
-                    </button>
-                    <ul class="vfx-list" id="vfxList" role="listbox" tabindex="-1" aria-label="Vehicle">
-                      <li role="option" data-val="Luxury AC Coach (50)" data-cap="50 seater" data-kind="coach">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><rect x="3" y="3" width="26" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="5" y="5" width="4" height="4" fill="currentColor"/><rect x="11" y="5" width="4" height="4" fill="currentColor"/><rect x="17" y="5" width="4" height="4" fill="currentColor"/><rect x="23" y="5" width="4" height="4" fill="currentColor"/><circle cx="9" cy="18" r="2" fill="currentColor"/><circle cx="23" cy="18" r="2" fill="currentColor"/></svg>
-                        <span class="vfx-n">Luxury AC Coach</span><span class="vfx-c">50 seater · Volvo / push-back</span>
-                      </li>
-                      <li role="option" data-val="Standard Coach (30/35)" data-cap="30 / 35 seater" data-kind="coach">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><rect x="3" y="3" width="26" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="5" y="5" width="4" height="4" fill="currentColor"/><rect x="11" y="5" width="4" height="4" fill="currentColor"/><rect x="17" y="5" width="4" height="4" fill="currentColor"/><circle cx="9" cy="18" r="2" fill="currentColor"/><circle cx="23" cy="18" r="2" fill="currentColor"/></svg>
-                        <span class="vfx-n">Standard Coach</span><span class="vfx-c">30 / 35 seater · AC or Non-AC</span>
-                      </li>
-                      <li role="option" data-val="Mini Bus (20)" data-cap="20 seater" data-kind="mini">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><rect x="6" y="4" width="20" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="8" y="6" width="4" height="4" fill="currentColor"/><rect x="14" y="6" width="4" height="4" fill="currentColor"/><circle cx="11" cy="18" r="1.8" fill="currentColor"/><circle cx="21" cy="18" r="1.8" fill="currentColor"/></svg>
-                        <span class="vfx-n">Mini Bus</span><span class="vfx-c">20 seater · group day-trips</span>
-                      </li>
-                      <li role="option" data-val="Tempo Traveller (12/17)" data-cap="12 / 17 seater" data-kind="van">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 16 V8 a2 2 0 0 1 2 -2 h14 l6 6 v4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 16 H27" stroke="currentColor" stroke-width="1.2"/><circle cx="9" cy="18" r="1.8" fill="currentColor"/><circle cx="22" cy="18" r="1.8" fill="currentColor"/></svg>
-                        <span class="vfx-n">Tempo Traveller</span><span class="vfx-c">12 / 17 seater · AC + driver</span>
-                      </li>
-                      <li role="option" data-val="Premium Sedan" data-cap="4 seater" data-kind="sedan">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 14 l3 -6 a3 3 0 0 1 2.6 -1.5 H22.4 a3 3 0 0 1 2.6 1.5 l3 6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2 14 H30 V17 H2 Z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="18" r="1.8" fill="currentColor"/><circle cx="24" cy="18" r="1.8" fill="currentColor"/></svg>
-                        <span class="vfx-n">Premium Sedan</span><span class="vfx-c">4 seater · chauffeured</span>
-                      </li>
-                      <li role="option" data-val="Luxury SUV" data-cap="7 seater" data-kind="suv">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 13 l2 -6 a2.5 2.5 0 0 1 2.4 -2 H24.6 a2.5 2.5 0 0 1 2.4 2 l2 6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2 13 H30 V17 H2 Z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="18" r="2" fill="currentColor"/><circle cx="24" cy="18" r="2" fill="currentColor"/></svg>
-                        <span class="vfx-n">Luxury SUV</span><span class="vfx-c">7 seater · long-haul comfort</span>
-                      </li>
-                      <li role="option" data-val="Cargo Truck" data-cap="freight" data-kind="truck">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 16 V7 H17 V16" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M17 11 H22 l4 4 v1 H17 Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2 16 H29" stroke="currentColor" stroke-width="1.2"/><circle cx="9" cy="18" r="1.8" fill="currentColor"/><circle cx="23" cy="18" r="1.8" fill="currentColor"/></svg>
-                        <span class="vfx-n">Cargo Truck</span><span class="vfx-c">multiple capacities · GPS</span>
-                      </li>
-                      <li role="option" data-val="Wedding Bus (decorated)" data-cap="decorated" data-kind="wedding">
-                        <svg class="vfx-i" viewBox="0 0 32 22" aria-hidden="true"><rect x="3" y="6" width="26" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="6" cy="4" r="1.4" fill="currentColor"/><circle cx="11" cy="3" r="1.6" fill="currentColor"/><circle cx="17" cy="3" r="1.6" fill="currentColor"/><circle cx="23" cy="3" r="1.6" fill="currentColor"/><circle cx="27" cy="4" r="1.4" fill="currentColor"/><circle cx="9" cy="18" r="1.8" fill="currentColor"/><circle cx="23" cy="18" r="1.8" fill="currentColor"/></svg>
-                        <span class="vfx-n">Wedding Bus</span><span class="vfx-c">decorated · baraat &amp; guests</span>
-                      </li>
-                    </ul>
-                    <input type="hidden" name="service" id="vfxValue" required/>
-                  </div>
+              <div class="field full">
+                <span class="field-tag">Vehicle</span>
+                <div class="vpicker" role="radiogroup" aria-label="Vehicle type">
+
+                  <label class="vcard" data-val="Luxury AC Coach (50)">
+                    <input type="radio" name="service" value="Luxury AC Coach (50)" required/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><rect x="3" y="3" width="26" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="5" y="5" width="4" height="4" fill="currentColor"/><rect x="11" y="5" width="4" height="4" fill="currentColor"/><rect x="17" y="5" width="4" height="4" fill="currentColor"/><rect x="23" y="5" width="4" height="4" fill="currentColor"/><circle cx="9" cy="18" r="2" fill="currentColor"/><circle cx="23" cy="18" r="2" fill="currentColor"/></svg>
+                    <span class="vcard-name">Luxury AC Coach</span>
+                    <span class="vcard-cap">50 seater</span>
+                  </label>
+
+                  <label class="vcard" data-val="Standard Coach (30/35)">
+                    <input type="radio" name="service" value="Standard Coach (30/35)"/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><rect x="3" y="3" width="26" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="5" y="5" width="4" height="4" fill="currentColor"/><rect x="11" y="5" width="4" height="4" fill="currentColor"/><rect x="17" y="5" width="4" height="4" fill="currentColor"/><circle cx="9" cy="18" r="2" fill="currentColor"/><circle cx="23" cy="18" r="2" fill="currentColor"/></svg>
+                    <span class="vcard-name">Standard Coach</span>
+                    <span class="vcard-cap">30 / 35 seater</span>
+                  </label>
+
+                  <label class="vcard" data-val="Mini Bus (20)">
+                    <input type="radio" name="service" value="Mini Bus (20)"/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><rect x="6" y="4" width="20" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="8" y="6" width="4" height="4" fill="currentColor"/><rect x="14" y="6" width="4" height="4" fill="currentColor"/><circle cx="11" cy="18" r="1.8" fill="currentColor"/><circle cx="21" cy="18" r="1.8" fill="currentColor"/></svg>
+                    <span class="vcard-name">Mini Bus</span>
+                    <span class="vcard-cap">20 seater</span>
+                  </label>
+
+                  <label class="vcard" data-val="Tempo Traveller (12/17)">
+                    <input type="radio" name="service" value="Tempo Traveller (12/17)"/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 16 V8 a2 2 0 0 1 2 -2 h14 l6 6 v4" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 16 H27" stroke="currentColor" stroke-width="1.2"/><circle cx="9" cy="18" r="1.8" fill="currentColor"/><circle cx="22" cy="18" r="1.8" fill="currentColor"/></svg>
+                    <span class="vcard-name">Tempo Traveller</span>
+                    <span class="vcard-cap">12 / 17 seater</span>
+                  </label>
+
+                  <label class="vcard" data-val="Premium Sedan">
+                    <input type="radio" name="service" value="Premium Sedan"/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 14 l3 -6 a3 3 0 0 1 2.6 -1.5 H22.4 a3 3 0 0 1 2.6 1.5 l3 6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2 14 H30 V17 H2 Z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="18" r="1.8" fill="currentColor"/><circle cx="24" cy="18" r="1.8" fill="currentColor"/></svg>
+                    <span class="vcard-name">Premium Sedan</span>
+                    <span class="vcard-cap">4 seater</span>
+                  </label>
+
+                  <label class="vcard" data-val="Luxury SUV">
+                    <input type="radio" name="service" value="Luxury SUV"/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 13 l2 -6 a2.5 2.5 0 0 1 2.4 -2 H24.6 a2.5 2.5 0 0 1 2.4 2 l2 6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2 13 H30 V17 H2 Z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="18" r="2" fill="currentColor"/><circle cx="24" cy="18" r="2" fill="currentColor"/></svg>
+                    <span class="vcard-name">Luxury SUV</span>
+                    <span class="vcard-cap">7 seater</span>
+                  </label>
+
+                  <label class="vcard" data-val="Cargo Truck">
+                    <input type="radio" name="service" value="Cargo Truck"/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><path d="M3 16 V7 H17 V16" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M17 11 H22 l4 4 v1 H17 Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2 16 H29" stroke="currentColor" stroke-width="1.2"/><circle cx="9" cy="18" r="1.8" fill="currentColor"/><circle cx="23" cy="18" r="1.8" fill="currentColor"/></svg>
+                    <span class="vcard-name">Cargo Truck</span>
+                    <span class="vcard-cap">freight</span>
+                  </label>
+
+                  <label class="vcard" data-val="Wedding Bus (decorated)">
+                    <input type="radio" name="service" value="Wedding Bus (decorated)"/>
+                    <span class="vcard-tick" aria-hidden="true">✓</span>
+                    <svg class="vcard-icon" viewBox="0 0 32 22" aria-hidden="true"><rect x="3" y="6" width="26" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="6" cy="4" r="1.4" fill="currentColor"/><circle cx="11" cy="3" r="1.6" fill="currentColor"/><circle cx="17" cy="3" r="1.6" fill="currentColor"/><circle cx="23" cy="3" r="1.6" fill="currentColor"/><circle cx="27" cy="4" r="1.4" fill="currentColor"/><circle cx="9" cy="18" r="1.8" fill="currentColor"/><circle cx="23" cy="18" r="1.8" fill="currentColor"/></svg>
+                    <span class="vcard-name">Wedding Bus</span>
+                    <span class="vcard-cap">decorated</span>
+                  </label>
                 </div>
-                <label><span>Date</span><input type="date" name="date"/></label>
               </div>
+
+              <label class="full"><span>Travel date</span><input type="date" name="date"/></label>
               <label class="full"><span>Trip details</span><textarea name="message" rows="3" placeholder="Group size, return date, pickup point…"></textarea></label>
               <input type="hidden" name="_subject" value="New Booking — Zain Ventures India" />
               <input type="hidden" name="email" value="zainventures@outlook.com" />

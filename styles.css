@@ -854,12 +854,99 @@ h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-tra
 .pass-form textarea { resize: vertical; min-height: 60px; font-family: var(--body); font-style: normal; font-size: 16px; line-height: 1.5; }
 .pass-form select { appearance: none; }
 
-/* ===== Vehicle picker (custom select) ===== */
-.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+/* ===== Vehicle picker (radio-card grid — show all options at once) ===== */
+.field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+.field.full { grid-column: 1 / -1; }
 .field-tag {
   font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--ink-soft);
 }
+
+.vpicker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+.vcard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 6px;
+  padding: 14px 12px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--paper);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(.2,.8,.1,1), border-color 0.25s, background 0.25s, box-shadow 0.25s, color 0.25s;
+  text-align: left;
+}
+.vcard input { position: absolute; opacity: 0; pointer-events: none; }
+.vcard-icon {
+  width: 36px; height: 24px;
+  color: var(--ink); opacity: 0.85;
+  transition: color 0.25s, transform 0.4s cubic-bezier(.2,.8,.1,1);
+}
+.vcard-name {
+  font-family: var(--display); font-style: italic; font-weight: 600;
+  font-variation-settings: "opsz" 96, "SOFT" 80;
+  font-size: 18px; letter-spacing: -0.01em; line-height: 1.05;
+  color: var(--ink);
+  transition: color 0.25s;
+}
+.vcard-cap {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color 0.25s;
+}
+.vcard-tick {
+  position: absolute; top: 10px; right: 10px;
+  width: 20px; height: 20px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 11px; line-height: 1;
+  color: transparent;
+  transition: color 0.25s, background 0.25s, border-color 0.25s, transform 0.3s cubic-bezier(.2,1.5,.3,1);
+}
+
+/* Hover */
+.vcard:hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: 0 8px 20px -10px rgba(0,0,0,0.2); }
+.vcard:hover .vcard-icon { color: var(--terracotta); transform: translateX(2px) rotate(-2deg); }
+
+/* Focus (keyboard) */
+.vcard:has(input:focus-visible) { outline: 2px dashed var(--terracotta); outline-offset: 4px; }
+
+/* Selected */
+.vcard:has(input:checked) {
+  border-color: var(--terracotta);
+  background: linear-gradient(180deg, var(--paper) 0%, #f7e6d8 100%);
+  box-shadow: inset 0 0 0 1px var(--terracotta), 0 12px 24px -10px rgba(217,71,46,0.3);
+}
+.vcard:has(input:checked) .vcard-icon { color: var(--terracotta); }
+.vcard:has(input:checked) .vcard-name { color: var(--terracotta); }
+.vcard:has(input:checked) .vcard-tick {
+  color: #fff;
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  transform: scale(1.05);
+}
+
+@media (max-width: 1000px) {
+  .vpicker { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+  .vpicker { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .vcard { padding: 12px 10px 10px; }
+  .vcard-name { font-size: 16px; }
+  .vcard-cap { font-size: 9px; }
+}
+@media (max-width: 380px) {
+  .vpicker { grid-template-columns: 1fr 1fr; }
+}
+
+/* Legacy vfx classes — kept inert in case anything still references them */
 .vfx { position: relative; }
 .vfx-trigger {
   width: 100%;
