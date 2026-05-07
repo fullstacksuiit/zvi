@@ -253,6 +253,15 @@
     const dateInput = document.querySelector('.pass-form input[name="date"]');
     const passDate = document.getElementById("passDate");
     const passDateValue = document.getElementById("passDateValue");
+    if (dateInput) {
+      // Default the travel-date field to today (local time).
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      dateInput.value = `${yyyy}-${mm}-${dd}`;
+      dateInput.min = dateInput.value;
+    }
     if (dateInput && passDate && passDateValue) {
       const MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
       const updateDate = () => {
