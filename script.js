@@ -418,6 +418,91 @@
     s.style.height = h + "%";
   });
 
+  // ---------- Char-by-char reveal for section headings ----------
+  function splitChars(el) {
+    if (!el || el.dataset.split) return;
+    el.dataset.split = "1";
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    const textNodes = [];
+    let node;
+    while ((node = walker.nextNode())) textNodes.push(node);
+    let i = 0;
+    textNodes.forEach(tn => {
+      const frag = document.createDocumentFragment();
+      [...tn.nodeValue].forEach(ch => {
+        if (ch === " " || ch === " " || ch === "\n") {
+          frag.appendChild(document.createTextNode(ch));
+        } else {
+          const s = document.createElement("span");
+          s.className = "ch";
+          s.style.setProperty("--i", i++);
+          s.textContent = ch;
+          frag.appendChild(s);
+        }
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+  }
+  const headings = document.querySelectorAll(".section-head .display");
+  headings.forEach(splitChars);
+  const headingObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-revealed");
+        headingObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  headings.forEach(h => headingObserver.observe(h));
+
+  // ---------- Stub cards stagger reveal ----------
+  const stubs = document.querySelectorAll(".stub");
+  const stubObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("in");
+        stubObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  stubs.forEach(s => stubObserver.observe(s));
+
+  // ---------- Hero number underline shimmer ----------
+  document.querySelectorAll(".hero-meta .num").forEach(n => {
+    requestAnimationFrame(() => n.classList.add("in"));
+  });
+
+  // ---------- Boarding pass 3D mouse tilt ----------
+  const passEl = document.querySelector(".pass");
+  if (passEl && matchMedia("(hover: hover)").matches) {
+    let raf = null;
+    const onMove = (e) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        const rect = passEl.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        passEl.classList.add("tilt");
+        passEl.style.setProperty("--rx", (-y * 5) + "deg");
+        passEl.style.setProperty("--ry", (x * 6) + "deg");
+        raf = null;
+      });
+    };
+    const onLeave = () => {
+      passEl.classList.remove("tilt");
+      passEl.style.removeProperty("--rx");
+      passEl.style.removeProperty("--ry");
+    };
+    passEl.addEventListener("mousemove", onMove);
+    passEl.addEventListener("mouseleave", onLeave);
+  }
+
+  // ---------- Page-load curtain cleanup ----------
+  const curtain = document.querySelector(".curtain");
+  if (curtain) {
+    setTimeout(() => curtain.classList.add("gone"), 1800);
+  }
+
   // ---------- Form: decorative submit feedback ----------
   const bookForm = document.getElementById("bookForm");
   if (bookForm) {
