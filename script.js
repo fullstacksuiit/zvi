@@ -129,9 +129,10 @@
     return null;
   }
 
-  function setActiveRoute(destKey) {
+  function setActiveRoute(destKey, opts) {
     const r = ROUTES[destKey];
     if (!r) return;
+    const fillForm = !!(opts && opts.fillForm);
 
     document.querySelectorAll(".route-line").forEach(el => {
       el.classList.toggle("is-active", el.getAttribute("data-route") === r.id);
@@ -160,10 +161,11 @@
     if (mapStateEl) mapStateEl.textContent = "● LIVE ROUTE · " + r.name.toUpperCase();
     if (mapDistEl)  mapDistEl.textContent  = `RKL → ${r.label} · ${r.km} · ${r.dur}`;
 
-    // Sync booking form's "to" field & pass panel
-    const toInput = document.querySelector('.pass-form input[name="to"]');
-    if (toInput && toInput.value.toUpperCase() !== r.name.toUpperCase()) {
-      toInput.value = r.name;
+    // Only overwrite the form's "to" field when explicitly asked (row CLICK).
+    // Hovering or typing must never fight the user's input.
+    if (fillForm) {
+      const toInput = document.querySelector('.pass-form input[name="to"]');
+      if (toInput) toInput.value = r.name;
     }
     updatePassPanel(destKey);
   }
@@ -175,12 +177,12 @@
       if (!ROUTES[dest]) return;
       row.addEventListener("click", (e) => {
         e.preventDefault();
-        setActiveRoute(dest);
+        setActiveRoute(dest, { fillForm: true });
       });
       if (matchMedia("(hover: hover)").matches) {
         let hoverTimer = null;
         row.addEventListener("mouseenter", () => {
-          hoverTimer = setTimeout(() => setActiveRoute(dest), 220);
+          hoverTimer = setTimeout(() => setActiveRoute(dest, { fillForm: false }), 220);
         });
         row.addEventListener("mouseleave", () => clearTimeout(hoverTimer));
       }
@@ -362,6 +364,79 @@
     const h = 50 + Math.random() * 50;
     s.style.height = h + "%";
   });
+
+  // ---------- Custom vehicle picker ----------
+  (function setupVfx() {
+    const root = document.getElementById("vfx");
+    if (!root) return;
+    const trigger = document.getElementById("vfxTrigger");
+    const list = document.getElementById("vfxList");
+    const label = document.getElementById("vfxLabel");
+    const cap = document.getElementById("vfxCap");
+    const iconHost = document.getElementById("vfxIcon");
+    const hidden = document.getElementById("vfxValue");
+    const items = Array.from(list.querySelectorAll("[role=option]"));
+    let focusIdx = -1;
+
+    trigger.dataset.empty = "1";
+
+    const setOpen = (open) => {
+      root.setAttribute("aria-expanded", open ? "true" : "false");
+      trigger.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) {
+        focusIdx = items.findIndex(li => li.getAttribute("aria-selected") === "true");
+        if (focusIdx < 0) focusIdx = 0;
+        renderFocus();
+        list.focus();
+      }
+    };
+    const renderFocus = () => {
+      items.forEach((li, i) => li.classList.toggle("is-focus", i === focusIdx));
+      const el = items[focusIdx];
+      if (el) el.scrollIntoView({ block: "nearest" });
+    };
+
+    const select = (li) => {
+      const val = li.dataset.val;
+      const capText = li.dataset.cap || "";
+      items.forEach(x => x.setAttribute("aria-selected", x === li ? "true" : "false"));
+      label.textContent = li.querySelector(".vfx-n").textContent;
+      cap.textContent = capText;
+      hidden.value = val;
+      trigger.dataset.empty = "0";
+      // Swap icon: clone the option's svg into the trigger
+      const svg = li.querySelector("svg");
+      if (svg) {
+        iconHost.innerHTML = "";
+        iconHost.appendChild(svg.cloneNode(true));
+      }
+      setOpen(false);
+      trigger.focus();
+    };
+
+    trigger.addEventListener("click", () => {
+      const isOpen = root.getAttribute("aria-expanded") === "true";
+      setOpen(!isOpen);
+    });
+    items.forEach((li, i) => {
+      li.addEventListener("click", () => select(li));
+      li.addEventListener("mouseenter", () => { focusIdx = i; renderFocus(); });
+    });
+    document.addEventListener("click", (e) => {
+      if (!root.contains(e.target)) setOpen(false);
+    });
+    list.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { setOpen(false); trigger.focus(); }
+      else if (e.key === "ArrowDown") { e.preventDefault(); focusIdx = (focusIdx + 1) % items.length; renderFocus(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); focusIdx = (focusIdx - 1 + items.length) % items.length; renderFocus(); }
+      else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (items[focusIdx]) select(items[focusIdx]); }
+    });
+    trigger.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault(); setOpen(true);
+      }
+    });
+  })();
 
   // ---------- Form: decorative submit feedback ----------
   const bookForm = document.getElementById("bookForm");

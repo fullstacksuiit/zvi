@@ -853,6 +853,113 @@ h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-tra
 }
 .pass-form textarea { resize: vertical; min-height: 60px; font-family: var(--body); font-style: normal; font-size: 16px; line-height: 1.5; }
 .pass-form select { appearance: none; }
+
+/* ===== Vehicle picker (custom select) ===== */
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field-tag {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.vfx { position: relative; }
+.vfx-trigger {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 0 11px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--display); font-style: italic; font-weight: 500;
+  font-size: 22px; letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 96, "SOFT" 80;
+  color: var(--ink);
+  cursor: pointer; text-align: left;
+  transition: border-color 0.3s, padding 0.3s;
+}
+.vfx-trigger:hover, .vfx[aria-expanded="true"] .vfx-trigger { border-color: var(--terracotta); }
+.vfx-icon { width: 32px; height: 22px; color: var(--terracotta); display: flex; align-items: center; }
+.vfx-icon svg { width: 100%; height: 100%; }
+.vfx-label { color: var(--ink); }
+.vfx-trigger[data-empty="1"] .vfx-label { color: var(--ink-soft); font-style: italic; }
+.vfx-cap {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--terracotta);
+  padding: 3px 8px; border: 1px solid var(--terracotta); border-radius: 3px;
+}
+.vfx-cap:empty { display: none; }
+.vfx-caret {
+  font-family: var(--mono); font-size: 14px; color: var(--ink-soft);
+  transition: transform 0.3s cubic-bezier(.7,0,.2,1);
+}
+.vfx[aria-expanded="true"] .vfx-caret { transform: rotate(180deg); color: var(--terracotta); }
+
+.vfx-list {
+  position: absolute;
+  top: calc(100% + 6px); left: 0; right: 0;
+  list-style: none; margin: 0; padding: 6px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.35);
+  z-index: 30;
+  max-height: 0; overflow: hidden;
+  opacity: 0;
+  transform: translateY(-8px) scaleY(0.96);
+  transform-origin: top center;
+  transition: opacity 0.25s, transform 0.3s cubic-bezier(.7,0,.2,1), max-height 0.4s cubic-bezier(.7,0,.2,1), padding 0.3s;
+  pointer-events: none;
+}
+.vfx[aria-expanded="true"] .vfx-list {
+  max-height: 480px;
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  pointer-events: auto;
+}
+.vfx-list li {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px 14px;
+  padding: 12px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: center;
+  position: relative;
+  color: var(--ink);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.vfx-list li:hover, .vfx-list li.is-focus {
+  background: var(--ink); color: var(--paper);
+}
+.vfx-list li.is-focus .vfx-c { color: var(--saffron); }
+.vfx-list li[aria-selected="true"]::before {
+  content: "✓";
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--terracotta); font-family: var(--mono); font-size: 14px;
+}
+.vfx-list .vfx-i {
+  grid-row: 1 / 3; grid-column: 1;
+  width: 36px; height: 24px; color: var(--terracotta);
+}
+.vfx-list li:hover .vfx-i, .vfx-list li.is-focus .vfx-i { color: var(--saffron); }
+.vfx-list .vfx-n {
+  grid-row: 1; grid-column: 2;
+  font-family: var(--display); font-style: italic; font-weight: 600;
+  font-variation-settings: "opsz" 96, "SOFT" 80;
+  font-size: 19px; letter-spacing: -0.01em; line-height: 1;
+}
+.vfx-list .vfx-c {
+  grid-row: 2; grid-column: 2;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 800px) {
+  .vfx-trigger { font-size: 18px; }
+  .vfx-list .vfx-n { font-size: 17px; }
+}
 .pass-form .big { margin-top: 20px; width: 100%; justify-content: center; }
 .pass-r {
   background: var(--paper-3);
