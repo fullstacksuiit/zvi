@@ -81,12 +81,6 @@
     SIMLIPAL:    { id: "route-simlipal",    label: "SIM", name: "Simlipal",    km: "230 KM", dur: "5H 00M",  ms: 7500  },
     VARANASI:    { id: "route-varanasi",    label: "VNS", name: "Varanasi",    km: "880 KM", dur: "16H 00M", ms: 17000 },
     CUTTACK:     { id: "route-cuttack",     label: "CTC", name: "Cuttack",     km: "350 KM", dur: "7H 00M",  ms: 9500  },
-    // Common alternates / extras useful for free-text "to" input
-    KONARK:      { id: "route-puri",        label: "KNK", name: "Konark",      km: "490 KM", dur: "9H 30M",  ms: 12000 },
-    DEOGHAR:     { id: "route-varanasi",    label: "DGR", name: "Deoghar",     km: "420 KM", dur: "9H 00M",  ms: 12000 },
-    GAYA:        { id: "route-varanasi",    label: "GAY", name: "Gaya",        km: "660 KM", dur: "13H 00M", ms: 15000 },
-    BOKARO:      { id: "route-jamshedpur",  label: "BKO", name: "Bokaro",      km: "230 KM", dur: "5H 00M",  ms: 7500  },
-    DHANBAD:     { id: "route-jamshedpur",  label: "DHN", name: "Dhanbad",     km: "260 KM", dur: "5H 30M",  ms: 8000  },
   };
 
   const mapStateEl = document.getElementById("mapState");
@@ -500,7 +494,7 @@
   // ---------- Page-load curtain cleanup ----------
   const curtain = document.querySelector(".curtain");
   if (curtain) {
-    setTimeout(() => curtain.classList.add("gone"), 1800);
+    setTimeout(() => curtain.classList.add("gone"), 3700);
   }
 
   // ---------- Form: decorative submit feedback ----------
