@@ -1,115 +1,25 @@
-# Zain Ventures India — Inter-State Bus Hire from Rourkela
+# Zain Ventures India
 
-> Zain Ventures India is a bus rental, tempo traveller and car-hire service based in Rourkela, Odisha (India). We specialise in **inter-state travel from Rourkela** to destinations across Odisha, Jharkhand, West Bengal and Uttar Pradesh. AC and Non-AC buses (20 / 30 / 35 / 40 / 50-seater), tempo travellers (12 / 17-seater), premium sedans, SUVs, and cargo trucks. Available 24/7 with professional drivers, GPS tracking and full insurance. Established 2014.
-
-## What we do (one-line summary)
-Inter-state coaches, tempo travellers and chauffeured cars from Rourkela for weddings, pilgrimages, corporate transit, school trips and outstation tourism — across four Indian states.
-
-## Contact
-
-- Phone (primary):  +91-9337000323
-- Phone (reservations / WhatsApp):  +91-8093552723
-- WhatsApp link: https://wa.me/918093552723
-- Email:  zainventures@outlook.com
-- Website:  https://www.zainventures.in
-- Address:  Rahmans Colony, Bisra, Rourkela, Sundargarh District, Odisha 769001, India
-- Coordinates:  22.2604° N, 84.8536° E
-- Hours:  24 hours, 7 days a week (open all festivals)
-
-## Inter-state routes from Rourkela (with distance + typical duration)
-
-| Destination | State | Distance | Duration | Notes |
-|---|---|---|---|---|
-| Puri | Odisha | 500 KM | 9–10 hrs | Jagannath Temple, beach, Konark Sun Temple |
-| Bhubaneswar | Odisha | 370 KM | 7–8 hrs | State capital, corporate, medical |
-| Cuttack | Odisha | 350 KM | 7 hrs | Bali Yatra, silver filigree shopping |
-| Sambalpur | Odisha | 165 KM | 3–4 hrs | Hirakud Dam, day trips |
-| Simlipal (Baripada) | Odisha | 230 KM | 5 hrs | Tiger reserve, Barehipani waterfall |
-| Konark | Odisha | 490 KM | 9 hrs | Sun Temple, beach circuit |
-| Ranchi | Jharkhand | 210 KM | 4–5 hrs | Corporate, family functions |
-| Jamshedpur (Tatanagar) | Jharkhand | 180 KM | 3–4 hrs | Office, industrial visits |
-| Bokaro | Jharkhand | 230 KM | 5 hrs | Steel City, business travel |
-| Dhanbad | Jharkhand | 260 KM | 5–6 hrs | Coal capital |
-| Deoghar | Jharkhand | 420 KM | 9 hrs | Baidyanath Jyotirlinga |
-| Gaya | Bihar / Jharkhand border | 660 KM | 13 hrs | Pilgrimage |
-| Kolkata | West Bengal | 540 KM | 10–11 hrs | Sleeper / semi-sleeper, groups |
-| Varanasi | Uttar Pradesh | 880 KM | 16 hrs | Tirth yatra |
+> Zain Ventures India runs a daily AC bus between Rourkela (Odisha) and Patna (Bihar), and hires out buses and cars. Based in Rourkela.
 
 ## Services
 
-- **Inter-state bus hire** — AC / Non-AC, 20-50 seater, with professional driver
-- **Wedding & event bus** — decorated luxury coaches for baraat, marriages, engagements
-- **Corporate transportation** — daily employee shuttles, conferences, team outings, offsites
-- **School & college trip bus** — GPS-tracked, with experienced drivers; group rates
-- **Pilgrimage / tirth yatra bus** — Puri, Varanasi, Deoghar, Gaya
-- **Outstation tour** — across Odisha, Jharkhand, West Bengal, Uttar Pradesh
-- **Tempo traveller rental** — 12 or 17 seater AC vehicle for family groups
-- **Premium car rental** — chauffeured sedans and SUVs
-- **Cargo truck rental** — local & interstate freight, multiple capacities
+### 1. Rourkela ⇄ Patna bus tickets
+- Stops: Rourkela, Gumla, Chatra, Gaya, Patna.
+- Runs daily in both directions.
+- AC bus with 2+2 pushback seats.
+- Times and fares: on the booking page.
+- Book online: https://fleetmanager.pythonanywhere.com/tickets/zain-ventures-india/
+- Or call or WhatsApp +91 93370 00323.
 
-## Fleet (vehicles available for rent)
+### 2. Bus and car hire
+- AC and non-AC buses, 20 to 50 seats.
+- Sedans and SUVs.
+- For weddings, tours, pilgrimages and corporate trips.
+- Call or WhatsApp +91 93370 00323 with the date, route and group size.
 
-- Mini Bus — 20 / 25 seater (AC and Non-AC)
-- Standard Coach — 30 and 35 seater (AC and Non-AC)
-- Deluxe Bus — 40 seater AC
-- Luxury AC Coach — 50 seater (most booked for weddings & long routes)
-- Volvo Bus — premium long-haul
-- Push-back Seat Bus — comfortable recline for long journeys
-- Sleeper / Semi-sleeper Bus — for overnight travel
-- Tempo Traveller — 12 and 17 seater AC, with driver
-- Premium Sedan — 4 / 5 seater chauffeured
-- Luxury SUV — 7 / 8 seater
-- Cargo Truck — multiple load capacities
-
-## Service area / coverage
-
-**Local pickup & drop-off (Rourkela neighbourhoods):**
-Chhend Colony, Civil Township, Uditnagar, Panposh, Vedvyas, Bondamunda, Bisra, Sectors 5 / 7 / 19, Tangarpali, Raghunathpali, Koel Nagar, Shaktinagar, Fertilizer Township, Basanti Colony, Plant Site Area, Hamirpur.
-
-**Surrounding towns (Odisha):**
-Sundargarh, Rajgangpur, Bonai, Sambalpur, Jharsuguda, Brajarajnagar, Barbil, Keonjhar, Deogarh, Angul.
-
-**Inter-state destinations served:**
-- Odisha: Bhubaneswar, Puri, Cuttack, Konark, Chilika, Simlipal
-- Jharkhand: Ranchi, Jamshedpur (Tatanagar), Bokaro, Dhanbad, Chaibasa, Deoghar
-- West Bengal: Kolkata
-- Uttar Pradesh: Varanasi
-- Bihar: Gaya
-
-## Use-cases (occasions)
-
-Weddings · Pilgrimages · Corporate transit · School trips · Picnics · Festivals (Durga Puja, Rath Yatra, Diwali) · Tourism · Birthdays & celebrations · Industrial visits · NCC camps · Medical travel · Airport transfers.
-
-## Booking
-
-- Phone: +91-9337000323 or +91-8093552723 (call any time, 24/7)
-- WhatsApp: +91-8093552723
-- Web form: https://www.zainventures.in/#book
-- Most quotes confirmed within an hour. Same-day booking common for most routes.
-
-## Pricing model
-
-Per-kilometre rate × trip distance + driver allowance. Specific rate depends on vehicle type, AC / non-AC, and duration. Non-AC mini bus rates start lowest; 50-seater AC luxury coaches sit at the top end. Wedding-decorated coaches priced separately. **Always call for an exact quote** — no hidden charges.
-
-## Payments accepted
-
-Cash · Credit Card · Debit Card · UPI · Bank Transfer (currency: INR)
-
-## Languages spoken
-
-English · Hindi · Odia
-
-## Why us
-
-- 11+ years operating in Rourkela; 500+ trips completed
-- Every vehicle fully insured with live GPS tracking
-- Trained, professional drivers
-- Transparent quotes, no hidden charges
-- 24/7 dispatch, same-day confirmations
-- Bilingual customer service across 4 states
-
-## Social
-
-- Facebook: https://www.facebook.com/zainventuresindia
-- Instagram: https://www.instagram.com/zainventures.in
-- Google Maps: https://share.google/94LP6D0DogeWN35HB
+## Contact
+- Phone and WhatsApp: +91 93370 00323 (https://wa.me/919337000323)
+- Email: zainventures@outlook.com
+- Address: Rahmans Colony, Bisra, Rourkela, Sundargarh District, Odisha 769001, India
+- Website: https://www.zainventures.in
