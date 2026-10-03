@@ -30,43 +30,53 @@ Use only the one phone number. Remove +91 80935 52723 from every file.
 
 ## Page structure
 
-Top to bottom:
+The page is the journey. Top to bottom:
 
 1. **Tricolour stripe.** A 4 px saffron, white and green band at the top of the page.
-2. **Nav.** The logo and "Zain Ventures" on the left. On the right are the links Tickets (`#tickets`), Reserve (`#reserve`) and FAQ (`#faq`), and a gold **Book ticket** button that goes to the booking page. On a phone (≤ 640 px), show only the logo, Book ticket and a call icon. The nav has no menu toggle.
-3. **Hero.** One short headline and one supporting line. Below them are two service cards: side by side on desktop, stacked on a phone.
-   - **Tickets card (`#tickets`).** Title "Rourkela ⇄ Patna". The route line with five stops. "Daily · AC 2+2 pushback". A gold **Book online** button (booking page), then Call and WhatsApp as secondary links.
-   - **Reserve card (`#reserve`).** Title "Hire a bus or car". The fleet list: AC and non-AC buses with 20–50 seats, and sedans and SUVs. One use-case line: weddings, tours, pilgrimages, corporate trips. **Call** and **WhatsApp** buttons.
-4. **FAQ (`#faq`).** 4–5 questions in `<details>` elements, only about the two services. Example questions: how to book a ticket, where the bus stops, how to reserve a bus, which vehicles you can hire, how to pay.
-5. **Footer.** Contact details, the address, a small flag mark next to "India", and a copyright line with a fixed year.
-6. **Phone bar.** Fixed to the bottom on screens ≤ 640 px: Book ticket · Call · WhatsApp. Add bottom padding to the page so the bar does not hide content.
+2. **Nav.** The logo and "Zain Ventures" on the left. On the right: the links Tickets (`#tickets`), Reserve (`#reserve`) and FAQ (`#faq`), and a gold **Book ticket** button (booking page). On a phone (≤ 640 px), show only the logo, a call icon and Book ticket. Below 380 px, hide the name.
+3. **Hero.** The small line "Daily · AC · 2+2 pushback", the headline "Rourkela to Patna, every day.", one supporting line, a gold **Book ticket** button and an outlined **Hire a bus or car** button (`#reserve`). A neutral white sheen sweeps once across the hero on load. No gold glow. A "Take the journey" link points down to the route.
+4. **Journey (`#tickets`).** A vertical gold route with five stops. Each stop has the place name, its state and one line:
+   - Rourkela (Odisha): "Board in comfort." AC bus, 2+2 pushback seats, every day.
+   - Gumla (Jharkhand): "Through the green hills of Jharkhand."
+   - Chatra (Jharkhand): "Forests and quiet roads."
+   - Gaya (Bihar): "Past Bodh Gaya, where the Buddha found enlightenment."
+   - Patna (Bihar): "On the banks of the Ganga. You've arrived." Then a gold **Book your seat** button, and call or WhatsApp.
+5. **Reserve (`#reserve`).** "Hire a bus or car": AC and non-AC buses with 20–50 seats, sedans and SUVs; weddings, tours, pilgrimages and corporate trips; **Call** and **WhatsApp** buttons.
+6. **FAQ (`#faq`).** Five questions in `<details>` elements, only about the two services.
+7. **Footer.** Contact details, the address, a short saffron-white-green rule, and a copyright line with a fixed year.
+8. **Phone bar.** Fixed to the bottom on screens ≤ 640 px: Book ticket · Call · WhatsApp.
 
-The cards hold the full service detail. The page has no separate route, fleet or "why us" sections.
+## Journey motion
+
+- As the visitor scrolls, a glowing gold light moves down the route, and the line fills in gold behind it. A "reading line" at 60 % of the screen height sets the light's position.
+- When the reading line passes a stop, its dot fills gold, its state label turns gold and its name turns from muted to full white. Text never drops below WCAG AA contrast.
+- The light eases toward its target position, so it never jumps.
+- The content is visible by default, and the script only adds the animated state (progressive enhancement). Without JavaScript, or with `prefers-reduced-motion`, all stops show at full opacity on a static route line, and the light is hidden.
 
 ## Visual system
 
-- **Background:** white `#fff`. **Text:** near-black `#111`. **Muted text:** `#555`. **Rules:** `#e5e5e5`.
-- **Accent:** gold `#C9A227`. Use it only as a fill, a line or a dot: buttons, the route line, stop dots and card top borders. Never use gold for text on white, because it fails contrast. Gold buttons have black text.
-- **Tricolour:** only the top stripe and the footer flag mark.
-- **Font:** the system font stack (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`). No web fonts.
-- **Motion:** none, except a hover colour change on buttons. Respect `prefers-reduced-motion`.
+- **Surfaces:** every section is shiny black: deep black `#050505` with a soft white sheen at the top and a 1 px highlight edge. A faint gold hairline marks each seam. The reserve panel uses the same gloss. No matte or white sections.
+- **Text:** warm white `#f4f1ea`. **Muted text:** `#a39e94`. **Rules:** `#262626`.
+- **Accent:** gold `#C9A227` for decoration: buttons, the route line, stop dots and thin rules. No gold halos or glows. Gold buttons have near-black text.
+- **Tricolour:** colours only, in the top stripe, short rules above section labels and a short footer rule. No flag symbols, no Ashoka Chakra and no map of India anywhere.
+- **Fonts:** system fonts only. Serif headings (`"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif`), sans-serif body (`system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`). No web fonts.
+- **Motion:** slow and eased; no bounces. Animate only `transform` and `opacity`.
 - **Tap targets:** at least 44 × 44 px.
 
 ## Performance budget
 
 - Whole page under 30 KB transferred on first load.
 - Lighthouse mobile performance score ≥ 95, and cumulative layout shift (CLS) of 0.
-- CSS inlined in `<head>`, under 8 KB.
-- No JavaScript.
+- CSS and JavaScript inlined in the page. CSS under 10 KB. JavaScript under 2 KB, with no libraries.
 - No web fonts and no third-party requests.
-- The logo resized to 80 px and saved as WebP (about 3 KB), with `width` and `height` set.
-- The route line drawn in inline SVG or CSS (about 1 KB).
+- The logo at 80 px in WebP (about 3 KB), with `width` and `height` set.
+- The scroll handler is passive and updates at most once per frame (`requestAnimationFrame`).
 
 ## Files
 
 | File | Change |
 |---|---|
-| `index.html` | Rewrite with inline CSS. |
+| `index.html` | Rewrite with inline CSS and JavaScript. |
 | `styles.css`, `script.js` | Delete. |
 | `logo.webp` | Add (80 px). |
 | `logo.png`, `logo-96.png` | Keep for the favicon, the manifest and social previews. |
