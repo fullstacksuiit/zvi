@@ -5,7 +5,7 @@
 ## Services
 
 ### 1. Rourkela ⇄ Patna bus tickets
-- Stops: Rourkela, Gumla, Chatra, Gaya, Patna.
+- Stops: Rourkela, Gumla, Chatra, Gayaji, Patna.
 - Runs daily in both directions.
 - AC bus with 2+2 pushback seats.
 - Times and fares: on the booking page.
