@@ -1,33 +1,22 @@
-# robots.txt for Zain Ventures India - Bus Hire Rourkela
+# robots.txt for Zain Ventures India
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /private/
 
-# Allow all major search and AI crawlers explicitly
+# Search and AI crawlers are welcome.
 User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /
-
 User-agent: Bingbot
-Allow: /
-
 User-agent: DuckDuckBot
-Allow: /
-
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot
 User-agent: facebookexternalhit
-Allow: /
-
 User-agent: Twitterbot
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
-
 User-agent: WhatsApp
 Allow: /
 
-# Sitemap location
-Sitemap: https://www.zainventures.in/sitemap.xml
+Sitemap: https://zainventures.in/sitemap.xml

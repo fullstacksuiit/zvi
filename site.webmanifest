@@ -1,17 +1,30 @@
 {
   "name": "Zain Ventures India — Rourkela to Patna Daily AC Bus",
   "short_name": "Zain Ventures",
-  "description": "Daily AC bus from Rourkela to Patna via Gumla, Chatra and Gayaji. Bus and car hire in Rourkela.",
+  "description": "Daily AC bus between Rourkela and Patna. Bus and car hire in Rourkela.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "lang": "en-IN",
-  "categories": ["travel", "business"],
+  "categories": [
+    "travel",
+    "business"
+  ],
   "icons": [
-    { "src": "logo-96.png", "sizes": "96x96",   "type": "image/png", "purpose": "any" },
-    { "src": "logo.png",    "sizes": "420x417", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "logo-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "420x417",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }

@@ -5,21 +5,33 @@
 ## Services
 
 ### 1. Rourkela ⇄ Patna bus tickets
-- Stops: Rourkela, Gumla, Chatra, Gayaji, Patna.
-- Runs daily in both directions.
+- Runs every day, in both directions. One bus each way.
+- Rourkela to Patna: leaves 5:30 PM, arrives 6:45 AM the next day.
+- Patna to Rourkela: leaves 4:50 PM, arrives 6:05 AM the next day.
+- Trip time: 13 hours 15 minutes.
+- Stops, in order from Rourkela: Rourkela, Birmitrapur, Simdega, Gumla, Lohardaga, Chatra, Gayaji (Gaya), Jehanabad, Patna.
+- States on the route: Odisha, Jharkhand, Bihar.
+- Fare: ₹1000 per seat for the full trip. Shorter trips cost less.
 - AC bus with 2+2 pushback seats.
-- Times and fares: on the booking page.
+- Pay online by UPI or card. The e-ticket is instant.
+- Times and fares can change. The booking page shows the current ones for each date.
 - Book online: https://fleetmanager.pythonanywhere.com/tickets/zain-ventures-india/
-- Or call or WhatsApp +91 93370 00323.
+- Book on WhatsApp: https://wa.me/16812393370
+- Or call +91 93370 00323.
 
 ### 2. Bus and car hire
 - AC and non-AC buses, 20 to 50 seats.
 - Sedans and SUVs.
 - For weddings, tours, pilgrimages and corporate trips.
-- Call or WhatsApp +91 93370 00323 with the date, route and group size.
+- Call or WhatsApp +91 93370 00323 with the date, route and group size. We reply with a price.
+
+## Common questions
+- How do I book a bus ticket to Patna? Book online on the booking page, or call or WhatsApp +91 93370 00323.
+- Where does the bus stop? Rourkela, Birmitrapur, Simdega, Gumla, Lohardaga, Chatra, Gayaji, Jehanabad and Patna.
+- Which vehicles can I hire? AC and non-AC buses with 20 to 50 seats, sedans and SUVs.
 
 ## Contact
 - Phone and WhatsApp: +91 93370 00323 (https://wa.me/919337000323)
 - Email: zainventures@outlook.com
-- Address: Rahmans Colony, Bisra, Rourkela, Sundargarh District, Odisha 769001, India
-- Website: https://www.zainventures.in
+- Location: Rourkela, Odisha 769001, India
+- Website: https://zainventures.in
