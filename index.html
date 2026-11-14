@@ -716,8 +716,18 @@
     }
     // Search: default to today, swap the towns, and bring the booking card into view with the result.
     var form = document.querySelector(".find"), from = form.elements.from, to = form.elements.to, date = form.elements.date;
-    var now = new Date(), today = new Date(now - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-    date.value = date.min = today;
+    // The bus runs on India time, so "today" is the date in India (UTC+5:30), not the date on the device.
+    function todayInIndia() { return new Date(Date.now() + 5.5 * 3600000).toISOString().slice(0, 10); }
+    // No date before today. The check runs when the reader leaves the field, so typing a date by hand still works.
+    function keepDateValid() {
+      date.min = todayInIndia();
+      if (date.value && date.value < date.min) date.value = date.min;
+    }
+    date.value = date.min = todayInIndia();
+    date.addEventListener("focus", function () { date.min = todayInIndia(); });
+    date.addEventListener("blur", function () { keepDateValid(); fillWhatsApp(); });
+    // A date picker can set the value without focus on the field. Check at once in that case.
+    date.addEventListener("change", function () { if (document.activeElement !== date) keepDateValid(); });
     function toBooking() { document.getElementById("book").scrollIntoView({ behavior: "smooth" }); }
     function check() { to.setCustomValidity(from.value === to.value ? "Choose two different towns." : ""); }
     from.addEventListener("change", check); to.addEventListener("change", check);
@@ -732,7 +742,7 @@
     function tripMessage() {
       var text = "Hi, I want to book a ticket";
       if (from.value !== to.value) text += " from " + townName(from.value) + " to " + townName(to.value);
-      var d = date.value.split("-");
+      var today = todayInIndia(), d = (date.value && date.value < today ? today : date.value).split("-");
       if (d.length === 3) text += " on " + Number(d[2]) + " " + MONTHS[d[1] - 1] + " " + d[0];
       return text + ".";
     }
@@ -744,8 +754,9 @@
     form.querySelector(".swap").addEventListener("click", fillWhatsApp);
     fillWhatsApp();
     document.querySelectorAll(".seats").forEach(function (a) {
-      a.href += "&date=" + today;
-      a.addEventListener("click", toBooking);
+      var base = a.href;
+      a.href = base + "&date=" + todayInIndia();
+      a.addEventListener("click", function () { a.href = base + "&date=" + todayInIndia(); toBooking(); });
     });
 
     function queue() { if (!queued) { queued = true; requestAnimationFrame(draw); } }
