@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Rourkela to Patna Daily AC Bus | Zain Ventures India</title>
-<meta name="description" content="Daily AC bus from Rourkela to Patna. Leaves 5:30 PM, arrives 6:45 AM, ₹1000 per seat. Book online or on WhatsApp. Bus and car hire in Rourkela." />
+<title>Rourkela to Patna Daily AC Bus | Zain Bus, Zain Ventures India</title>
+<meta name="description" content="Zain bus: daily AC bus from Rourkela to Patna. Leaves 5:30 PM, arrives 6:45 AM, ₹1000 per seat. Book online or on WhatsApp. Bus and car hire in Rourkela." />
 <link rel="canonical" href="https://zainventures.in/" />
 <link rel="alternate" hreflang="en-IN" href="https://zainventures.in/" />
 <link rel="alternate" hreflang="x-default" href="https://zainventures.in/" />
@@ -18,10 +18,10 @@
 
 <meta name="geo.region" content="IN-OR" />
 <meta name="geo.placename" content="Rourkela, Odisha, India" />
-<meta name="geo.position" content="22.2604;84.8536" />
+<meta name="geo.position" content="22.2246;84.8595" />
 
-<meta property="og:title" content="Rourkela to Patna Daily AC Bus | Zain Ventures India" />
-<meta property="og:description" content="Daily AC bus from Rourkela to Patna. Leaves 5:30 PM, arrives 6:45 AM, ₹1000 per seat. Book online or on WhatsApp. Bus and car hire in Rourkela." />
+<meta property="og:title" content="Rourkela to Patna Daily AC Bus | Zain Bus, Zain Ventures India" />
+<meta property="og:description" content="Zain bus: daily AC bus from Rourkela to Patna. Leaves 5:30 PM, arrives 6:45 AM, ₹1000 per seat. Book online or on WhatsApp. Bus and car hire in Rourkela." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://zainventures.in/" />
 <meta property="og:image" content="https://zainventures.in/logo.png" />
@@ -49,6 +49,7 @@
    "@type": "LocalBusiness",
    "@id": "https://zainventures.in/#business",
    "name": "Zain Ventures India",
+   "alternateName": "Zain Bus",
    "url": "https://zainventures.in/",
    "logo": "https://zainventures.in/logo.png",
    "image": "https://zainventures.in/logo.png",
@@ -64,8 +65,8 @@
    },
    "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 22.2604,
-    "longitude": 84.8536
+    "latitude": 22.2245755,
+    "longitude": 84.8594631
    },
    "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
@@ -81,7 +82,9 @@
     "opens": "00:00",
     "closes": "23:59"
    },
+   "hasMap": "https://www.google.com/maps?cid=4369737631760114957",
    "sameAs": [
+    "https://www.google.com/maps?cid=4369737631760114957",
     "https://www.facebook.com/zainventuresindia",
     "https://www.instagram.com/zainventures.in"
    ]
@@ -237,6 +240,14 @@
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "The bus leaves Rourkela at 5:30 PM and reaches Patna at 6:45 AM the next day. It leaves Patna at 4:50 PM and reaches Rourkela at 6:05 AM the next day. A seat for the full trip costs ₹1000. The booking page shows the current times and fares for each date."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is Zain bus the same as Zain Ventures India?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Zain Ventures India runs the Zain bus between Rourkela and Patna. The bus has the name ZAIN on its side."
      }
     },
     {
@@ -406,7 +417,7 @@
   .leg .via { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hair); color: var(--grey); font-size: 15px; }
   .leg .fare { margin-top: 10px; font-size: 15px; color: var(--grey); }
   .leg .fare b { color: var(--ink); font-size: 19px; font-weight: 600; }
-  .leg .more { margin-top: 8px; }
+  .leg .more { margin-top: 8px; margin-right: 22px; }
   .facts { display: grid; grid-template-columns: 1fr 1fr; margin-top: 14px; border-radius: var(--r); background: var(--mist); padding: 10px 24px; }
   .facts div { padding: 16px 0; }
   .facts dt { font-size: 19px; font-weight: 600; letter-spacing: -.02em; }
@@ -451,7 +462,9 @@
   .foot .wrap { display: grid; gap: 20px; }
   .foot strong { display: block; color: var(--ink); font-weight: 600; }
   .foot a { color: var(--ink); }
-  .foot .legal a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+  .foot .legal a, .foot .map-link { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+  .foot .routes { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .foot .routes strong { flex-basis: 100%; }
   .reach { display: flex; align-items: center; gap: 8px; margin: 4px 0 6px; }
   .reach a:first-child { margin-right: 4px; font-size: 15px; }
   .ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--white); box-shadow: inset 0 0 0 1px var(--hair); }
@@ -495,7 +508,7 @@
     .times, .book, .hire, .faq { padding-top: 140px; }
     .book, .hire, .faq { padding-bottom: 140px; }
     .foot .wrap { grid-template-columns: 1fr 1fr; }
-    .foot .legal { grid-column: 1 / -1; }
+    .foot .legal, .foot .routes { grid-column: 1 / -1; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -577,6 +590,7 @@
           <p class="via">Via Birmitrapur, Simdega, Gumla, Lohardaga, Chatra, Gayaji and Jehanabad.</p>
           <p class="fare"><b>₹1000</b> per seat. Shorter trips cost less.</p>
           <a class="more seats" href="https://fleetmanager.pythonanywhere.com/tickets/zain-ventures-india/results/?from=ROURKELA&amp;to=PATNA" target="booking">See seats</a>
+          <a class="more" href="/rourkela-to-patna-bus/">All stops and fares</a>
         </article>
         <article class="leg">
           <h3>Patna to Rourkela</h3>
@@ -588,6 +602,7 @@
           <p class="via">Via Jehanabad, Gayaji, Chatra, Lohardaga, Gumla, Simdega and Birmitrapur.</p>
           <p class="fare"><b>₹1000</b> per seat. Shorter trips cost less.</p>
           <a class="more seats" href="https://fleetmanager.pythonanywhere.com/tickets/zain-ventures-india/results/?from=PATNA&amp;to=ROURKELA" target="booking">See seats</a>
+          <a class="more" href="/patna-to-rourkela-bus/">All stops and fares</a>
         </article>
       </div>
       <dl class="facts">
@@ -617,6 +632,7 @@
         <div class="tile" style="--i:1"><b>Cars</b><span>Sedans and SUVs</span></div>
       </div>
       <div class="cta"><a class="pill" href="tel:+919337000323">Call +91 93370 00323</a><a class="wa" href="https://wa.me/919337000323?text=Hi,%20I%20want%20to%20hire%20a%20vehicle"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa" /></svg>WhatsApp</a></div>
+      <div class="cta"><a class="more" href="/bus-hire-rourkela/">Bus hire in Rourkela</a><a class="more" href="/car-hire-rourkela/">Car hire in Rourkela</a></div>
     </div>
   </section>
 
@@ -626,6 +642,7 @@
       <details><summary>How do I book a bus ticket to Patna?</summary><p>Book online on our <a href="#book">booking page</a>, or call or WhatsApp <a href="tel:+919337000323">+91 93370 00323</a>.</p></details>
       <details><summary>Where does the bus stop?</summary><p>Rourkela, Birmitrapur, Simdega, Gumla, Lohardaga, Chatra, Gayaji, Jehanabad and Patna. The bus runs daily in both directions.</p></details>
       <details><summary>What are the bus times and fares?</summary><p>The bus leaves Rourkela at 5:30 PM and reaches Patna at 6:45 AM the next day. It leaves Patna at 4:50 PM and reaches Rourkela at 6:05 AM the next day. A seat for the full trip costs ₹1000. The booking page shows the current times and fares for each date.</p></details>
+      <details><summary>Is Zain bus the same as Zain Ventures India?</summary><p>Yes. Zain Ventures India runs the Zain bus between Rourkela and Patna. The bus has the name ZAIN on its side.</p></details>
       <details><summary>How do I hire a bus or car?</summary><p>Call or WhatsApp <a href="tel:+919337000323">+91 93370 00323</a> with your date, route and group size. We reply with a price.</p></details>
       <details><summary>Which vehicles can I hire?</summary><p>AC and non-AC buses with 20 to 50 seats, sedans and SUVs.</p></details>
     </div>
@@ -634,8 +651,9 @@
 
 <footer class="foot">
   <div class="wrap">
-    <div><strong>Zain Ventures India</strong>Rourkela, Odisha 769001</div>
+    <div><strong>Zain Ventures India (Zain bus)</strong>Rourkela, Odisha 769001<br /><a class="map-link" href="https://www.google.com/maps?cid=4369737631760114957" rel="noopener">Find us on Google Maps</a></div>
     <div><strong>Contact</strong><span class="reach"><a href="tel:+919337000323">+91 93370 00323</a><a class="ico" href="tel:+919337000323" aria-label="Call +91 93370 00323"><svg class="call-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#call" /></svg></a><a class="ico" href="https://wa.me/919337000323" aria-label="WhatsApp +91 93370 00323"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa" /></svg></a></span><a href="mailto:zainventures@outlook.com">zainventures@outlook.com</a></div>
+    <div class="routes"><strong>Routes</strong><a href="/rourkela-to-patna-bus/">Rourkela to Patna</a><a href="/patna-to-rourkela-bus/">Patna to Rourkela</a><a href="/rourkela-to-gaya-bus/">Rourkela to Gaya</a><a href="/gaya-to-rourkela-bus/">Gaya to Rourkela</a><a href="/rourkela-to-gumla-bus/">Rourkela to Gumla</a><a href="/gumla-to-patna-bus/">Gumla to Patna</a><a href="/patna-to-gumla-bus/">Patna to Gumla</a><a href="/simdega-to-patna-bus/">Simdega to Patna</a><a href="/lohardaga-to-patna-bus/">Lohardaga to Patna</a><a href="/chatra-to-patna-bus/">Chatra to Patna</a><a href="/bus-hire-rourkela/">Bus hire</a><a href="/car-hire-rourkela/">Car hire</a></div>
     <div class="legal"><span>© 2026 Zain Ventures India · Made by <a href="https://strix.co.in" rel="noopener">Strix</a></span></div>
   </div>
 </footer>

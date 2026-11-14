@@ -1,6 +1,6 @@
 # Zain Ventures India
 
-> Zain Ventures India runs a daily AC bus between Rourkela (Odisha) and Patna (Bihar), and hires out buses and cars. Based in Rourkela.
+> Zain Ventures India runs a daily AC bus between Rourkela (Odisha) and Patna (Bihar), and hires out buses and cars. Based in Rourkela. People also call the bus "Zain bus": it has the name ZAIN on its side.
 
 ## Services
 
@@ -12,6 +12,11 @@
 - Stops, in order from Rourkela: Rourkela, Birmitrapur, Simdega, Gumla, Lohardaga, Chatra, Gayaji (Gaya), Jehanabad, Patna.
 - States on the route: Odisha, Jharkhand, Bihar.
 - Fare: ₹1000 per seat for the full trip. Shorter trips cost less.
+- Times at each stop, Rourkela to Patna: Rourkela 5:30 PM, Birmitrapur 6:25 PM, Simdega 7:40 PM, Gumla 9:30 PM, Lohardaga 10:55 PM, Chatra 1:30 AM, Gayaji 3:35 AM, Jehanabad 5:05 AM, Patna 6:45 AM.
+- Times at each stop, Patna to Rourkela: Patna 4:50 PM, Jehanabad 6:15 PM, Gayaji 7:40 PM, Chatra 10:00 PM, Lohardaga 12:35 AM, Gumla 2:00 AM, Simdega 3:50 AM, Birmitrapur 5:05 AM, Rourkela 6:05 AM.
+- Fares from Rourkela: Gumla ₹350, Lohardaga ₹450, Chatra ₹550, Gayaji ₹700, Jehanabad ₹800, Patna ₹1000.
+- Fares to Patna: from Simdega ₹800, Gumla ₹700, Lohardaga ₹590, Chatra ₹400, Gayaji ₹240, Jehanabad ₹130.
+- Fares from Patna: Jehanabad ₹110, Gayaji ₹210, Chatra ₹390, Lohardaga ₹580, Gumla ₹690, Simdega ₹830, Birmitrapur ₹920, Rourkela ₹1000.
 - AC bus with 2+2 pushback seats.
 - Pay online by UPI or card. The e-ticket is instant.
 - Times and fares can change. The booking page shows the current ones for each date.
@@ -25,6 +30,20 @@
 - For weddings, tours, pilgrimages and corporate trips.
 - Call or WhatsApp +91 93370 00323 with the date, route and group size. We reply with a price.
 
+## Pages
+- Rourkela to Patna bus: https://zainventures.in/rourkela-to-patna-bus/
+- Patna to Rourkela bus: https://zainventures.in/patna-to-rourkela-bus/
+- Rourkela to Gaya bus: https://zainventures.in/rourkela-to-gaya-bus/
+- Gaya to Rourkela bus: https://zainventures.in/gaya-to-rourkela-bus/
+- Rourkela to Gumla bus: https://zainventures.in/rourkela-to-gumla-bus/
+- Gumla to Patna bus: https://zainventures.in/gumla-to-patna-bus/
+- Patna to Gumla bus: https://zainventures.in/patna-to-gumla-bus/
+- Simdega to Patna bus: https://zainventures.in/simdega-to-patna-bus/
+- Lohardaga to Patna bus: https://zainventures.in/lohardaga-to-patna-bus/
+- Chatra to Patna bus: https://zainventures.in/chatra-to-patna-bus/
+- Bus hire in Rourkela: https://zainventures.in/bus-hire-rourkela/
+- Car hire in Rourkela: https://zainventures.in/car-hire-rourkela/
+
 ## Common questions
 - How do I book a bus ticket to Patna? Book online on the booking page, or call or WhatsApp +91 93370 00323.
 - Where does the bus stop? Rourkela, Birmitrapur, Simdega, Gumla, Lohardaga, Chatra, Gayaji, Jehanabad and Patna.
@@ -34,4 +53,5 @@
 - Phone and WhatsApp: +91 93370 00323 (https://wa.me/919337000323)
 - Email: zainventures@outlook.com
 - Location: Rourkela, Odisha 769001, India
+- Google Maps: https://www.google.com/maps?cid=4369737631760114957
 - Website: https://zainventures.in

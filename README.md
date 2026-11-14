@@ -1,10 +1,14 @@
 # Zain Ventures India website
 
-The one-page site at https://zainventures.in. It shows two services: the daily Rourkela ⇄ Patna AC bus, and bus and car hire.
+The site at https://zainventures.in. It shows two services: the daily Rourkela ⇄ Patna AC bus, and bus and car hire.
 
 ## Files
 
-- `index.html` — the whole page, with the CSS and the JavaScript inline. No build step, no web fonts, no libraries.
+- `index.html` — the home page, with the CSS and the JavaScript inline. No web fonts, no libraries.
+- `rourkela-to-patna-bus/`, `bus-hire-rourkela/` and the other folders — one page for each route and each hire service. Each page targets one search, for example "Rourkela to Gaya bus". A script writes them.
+- `pages.css` — the styles for those pages.
+- `_build/pages.py` — the script that writes those pages and `sitemap.xml`. GitHub Pages does not publish folders that start with `_`.
+- `_build/timetable.json` — the time at each stop and the fare for each pair of stops.
 - `logo.webp` — the logo on the page. `logo.png` and `logo-96.png` are for the favicon, the manifest and social previews.
 - `llms.txt` — the same facts in plain text, for AI assistants.
 - `site.webmanifest`, `sitemap.xml`, `robots.txt`, `CNAME` — site metadata.
@@ -16,6 +20,7 @@ The times, the fare and the stops come from the booking page. When they change, 
 - the timetable and the Questions section in `index.html`
 - the structured data (`application/ld+json`) at the top of `index.html`
 - `llms.txt`
+- `_build/timetable.json`. Then run `python3 _build/pages.py` to write the route pages again.
 
 ## How the page works
 
