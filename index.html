@@ -350,7 +350,7 @@
   .trip { background: var(--black); color: #f5f5f7; }
   .stage { position: relative; overflow: hidden; padding: 80px 0; }
   .stage .wrap { position: relative; z-index: 1; }
-  .js .trip { height: calc(170vh - 52px); height: calc(100svh + 70vh - 52px); }
+  .js .trip { height: calc(184vh - 52px); height: calc(100svh + 84vh - 52px); }
   .js .stage { position: sticky; top: 52px; height: calc(100vh - 52px); height: calc(100svh - 52px); padding: 22px 0 calc(84px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; justify-content: center; }
   .js .stage .wrap { width: 100%; }
   .sky, .sky i { position: absolute; inset: 0; pointer-events: none; }
@@ -695,7 +695,7 @@
     function measure() {
       busTravel = rail.clientWidth - lamp.clientWidth * 228 / 260;
       wheelRadius = lamp.clientWidth * 10 / 260;
-      // The section holds on screen for a short scroll (70% of one screen). That scroll runs the trip.
+      // The section holds on screen for a short scroll (84% of one screen). That scroll runs the trip.
       scrollTravel = Math.max(1, trip.offsetHeight - stage.offsetHeight);
       lamp.style.setProperty("--travel", busTravel.toFixed(1));
     }
