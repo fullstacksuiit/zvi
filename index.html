@@ -369,6 +369,11 @@
   .map { display: none; }
   .js .map { display: block; order: 2; flex: 1 1 0; min-height: 0; max-height: 300px; aspect-ratio: 270.5 / 408; align-self: center; margin: 8px 0 0; }
   @media (max-height: 600px) and (max-width: 759px) { .js .map { display: none; } }
+  /* Phones: the script cuts the map to the road, so the road is drawn large. The cut edges fade out. */
+  @media (max-width: 759px) {
+    .js .map { align-self: stretch; aspect-ratio: auto; margin: 0; -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
+    .js .stage .stops { height: 10.5em; }
+  }
   .map path { fill: transparent; stroke: rgba(255, 255, 255, .16); stroke-width: 1; vector-effect: non-scaling-stroke; transition: stroke .7s var(--ease), fill .7s var(--ease); }
   .map path.cur { stroke: rgba(255, 255, 255, .7); fill: rgba(255, 255, 255, .08); }
   .map .way { fill: none; stroke: rgba(255, 255, 255, .28); stroke-dasharray: 2 4; }
@@ -676,6 +681,11 @@
     var stops = [].slice.call(stage.querySelectorAll(".stop")), nodes = [].slice.call(stage.querySelectorAll(".node"));
     var states = [].slice.call(stage.querySelectorAll(".map path[data-s]")), towns = [].slice.call(stage.querySelectorAll(".map .town"));
     var lamp = stage.querySelector(".lamp"), rail = stage.querySelector(".rail");
+    // Phones have little room, so they show only the part of the map that holds the road.
+    var map = stage.querySelector(".map"), phone = matchMedia("(max-width: 759px)");
+    function frameMap() { map.setAttribute("viewBox", phone.matches ? "0 66 270.5 172" : "0 0 270.5 408"); }
+    frameMap();
+    if (phone.addEventListener) phone.addEventListener("change", frameMap);
     var last = stops.length - 1, heldAt = null, queued = false;
     // "target" is where the scroll says the bus is. "shown" is where the bus is drawn. It follows the target.
     var target = 0, shown = -1, speed = 0, lastTime = 0, running = false;
