@@ -354,10 +354,12 @@
   .js .stage { position: sticky; top: 52px; height: calc(100vh - 52px); height: calc(100svh - 52px); padding: 22px 0 calc(84px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; justify-content: center; }
   .js .stage .wrap { width: 100%; }
   .sky, .sky i { position: absolute; inset: 0; pointer-events: none; }
+  /* Each part that moves with the scroll has its own layer, so a new frame does not paint the stage again. */
+  .sky i, .rail .fill, .js .map { will-change: transform, opacity; }
   .sky .dusk { background: radial-gradient(120% 70% at 18% 100%, rgba(214, 110, 48, .34), rgba(120, 50, 70, .14) 45%, transparent 70%); opacity: calc(1 - var(--p, 0) * 2.6); }
   .sky .dawn { background: radial-gradient(120% 75% at 82% 100%, rgba(255, 196, 140, .3), rgba(110, 140, 200, .16) 48%, transparent 72%); opacity: calc((var(--p, 0) - .62) * 2.7); }
   /* Lights follow the sky: off at dusk, on through the night, off again at dawn. */
-  .stage { --night: clamp(0, min(var(--p, 0) * 3, (1 - var(--p, 0)) * 3.2), 1); }
+  .rail, .map { --night: clamp(0, min(var(--p, 0) * 3, (1 - var(--p, 0)) * 3.2), 1); }
   .lamp .beam { opacity: calc(.12 + var(--night) * .88); }
   .lamp .head { opacity: calc(.45 + var(--night) * .55); }
   .lamp .berths { opacity: calc(.05 + var(--night) * .45); }
@@ -388,7 +390,7 @@
   .trip-title b { color: #f5f5f7; font-weight: 600; }
   .rail { display: none; }
   .js .rail { display: block; position: relative; height: 2px; margin: clamp(60px, 9vh, 84px) 6px 0; background: rgba(255, 255, 255, .16); border-radius: 2px; }
-  .rail .fill { position: absolute; inset: 0; background: #f5f5f7; border-radius: 2px; clip-path: inset(0 calc((1 - var(--p, 0)) * 100%) 0 0); }
+  .rail .fill { position: absolute; inset: 0; background: #f5f5f7; border-radius: 2px; transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
   .rail .node { position: absolute; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #000; border: 2px solid rgba(255, 255, 255, .28); padding: 0; cursor: pointer; font: inherit; transition: border-color .4s, background-color .4s; }
   .rail .node::before { content: ""; position: absolute; inset: -18px -22px -34px; }
   .rail .node span { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 500; color: #86868b; transition: color .4s; }
@@ -686,33 +688,39 @@
     function frameMap() { map.setAttribute("viewBox", phone.matches ? "0 66 270.5 172" : "0 0 270.5 408"); }
     frameMap();
     if (phone.addEventListener) phone.addEventListener("change", frameMap);
-    var last = stops.length - 1, heldAt = null, queued = false;
+    var sky = stage.querySelector(".sky"), journey = document.querySelector(".journey"), trip = stage.parentNode;
+    var last = stops.length - 1, heldAt = null, queued = false, stopShown = -1;
+    // Sizes are read once and again on resize. A size read in each frame makes the browser lay out the page in each frame.
+    var busTravel = 0, wheelRadius = 1, scrollTravel = 1;
+    function measure() {
+      busTravel = rail.clientWidth - lamp.clientWidth * 228 / 260;
+      wheelRadius = lamp.clientWidth * 10 / 260;
+      // The section holds on screen for a short scroll (70% of one screen). That scroll runs the trip.
+      scrollTravel = Math.max(1, trip.offsetHeight - stage.offsetHeight);
+      lamp.style.setProperty("--travel", busTravel.toFixed(1));
+    }
     // "target" is where the scroll says the bus is. "shown" is where the bus is drawn. It follows the target.
     var target = 0, shown = -1, speed = 0, lastTime = 0, running = false;
 
     function show(p) {
-      var i = Math.round(p * last);
-      stage.style.setProperty("--p", p.toFixed(4));
+      var i = Math.round(p * last), value = p.toFixed(4);
+      // Only the sky, the rail and the map use the position. The rest of the page does not restyle.
+      sky.style.setProperty("--p", value); rail.style.setProperty("--p", value); map.style.setProperty("--p", value);
       // The wheels turn by the distance the bus moved.
-      var bodyWidth = lamp.clientWidth * 228 / 260, wheelRadius = lamp.clientWidth * 10 / 260;
-      lamp.style.setProperty("--travel", (rail.clientWidth - bodyWidth).toFixed(1));
-      lamp.style.setProperty("--spin", (p * (rail.clientWidth - bodyWidth) / wheelRadius).toFixed(3));
+      lamp.style.setProperty("--spin", (p * busTravel / wheelRadius).toFixed(3));
+      nodes.forEach(function (n, k) { n.classList.toggle("on", p >= k / last - 0.01); });
+      if (i === stopShown) return;
+      stopShown = i;
       stops.forEach(function (s, k) { s.classList.toggle("on", k === i); s.classList.toggle("past", k < i); });
-      nodes.forEach(function (n, k) { n.classList.toggle("on", p >= k / last - 0.01); n.classList.toggle("cur", k === i); });
+      nodes.forEach(function (n, k) { n.classList.toggle("cur", k === i); });
       var state = stops[i].querySelector(".state").textContent;
       states.forEach(function (path) { path.classList.toggle("cur", path.getAttribute("data-s") === state); });
       towns.forEach(function (dot, k) { dot.classList.toggle("cur", k === i); });
     }
 
-    // The bus never stops between the ends. It slows near each town (to 35% speed) and is faster between towns.
-    function slowNearTowns(p) {
-      var leg = Math.min(last - 1, Math.floor(p * last)), t = p * last - leg;
-      return (leg + t - 0.65 * Math.sin(2 * Math.PI * t) / (2 * Math.PI)) / last;
-    }
-
     function step(time) {
       var dt = (lastTime ? Math.min(34, time - lastTime) : 16) / 1000; lastTime = time;
-      // A critically damped spring: the bus speeds up and slows down without a jolt. Small time slices keep it exact.
+      // The bus moves at the speed of the scroll. A critically damped spring removes the jolts from the scroll. Small time slices keep it exact.
       var pull = 11, next = shown;
       for (var slices = Math.ceil(dt / 0.004), h = dt / slices, n = 0; n < slices; n++) {
         speed += (-2 * pull * speed - pull * pull * (next - target)) * h;
@@ -723,7 +731,7 @@
       if (shown !== target) requestAnimationFrame(step); else running = false;
     }
     function moveTo(p) {
-      target = slowNearTowns(p);
+      target = p;
       if (shown < 0) { shown = target; show(shown); return; }
       if (!running && shown !== target) { running = true; lastTime = 0; requestAnimationFrame(step); }
     }
@@ -733,14 +741,14 @@
 
     function draw() {
       queued = false;
-      toTop.classList.toggle("show", scrollY > innerHeight * 0.8);
+      // Read first, then write. A read after a write makes the browser lay out the page twice in one frame.
       var page = scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      document.documentElement.style.setProperty("--page", Math.min(1, Math.max(0, page)).toFixed(4));
+      var p = (52 - trip.getBoundingClientRect().top) / scrollTravel;
+      toTop.classList.toggle("show", scrollY > innerHeight * 0.8);
+      journey.style.setProperty("--page", Math.min(1, Math.max(0, page)).toFixed(4));
       if (heldAt !== null && Math.abs(scrollY - heldAt) < 120) return;
       heldAt = null;
-      // The section holds on screen for a short scroll (70% of one screen). That scroll runs the trip.
-      var trip = stage.parentNode, travel = trip.offsetHeight - stage.offsetHeight;
-      moveTo(Math.min(1, Math.max(0, (52 - trip.getBoundingClientRect().top) / travel)));
+      moveTo(Math.min(1, Math.max(0, p)));
     }
     // Search: default to today, swap the towns, and bring the booking card into view with the result.
     var form = document.querySelector(".find"), from = form.elements.from, to = form.elements.to, date = form.elements.date;
@@ -789,6 +797,8 @@
 
     function queue() { if (!queued) { queued = true; requestAnimationFrame(draw); } }
     addEventListener("scroll", queue, { passive: true });
+    addEventListener("resize", function () { measure(); if (shown >= 0) show(shown); queue(); });
+    measure();
     draw();
   })();
 </script>
